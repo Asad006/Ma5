@@ -1,0 +1,9 @@
+@startuml
+
+class InventoryItemsApp  {
+    public  start()
+    }
+class InventoryItemsController {
+
+}
+@enduml
