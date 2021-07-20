@@ -6,4 +6,18 @@ class InventoryItemsApp  {
 class InventoryItemsController {
 
 }
+class InventoryItem{
+    - itemValue : SimpleStringProperty
+    - temSerialNumber : SimpleStringProperty
+    - itemName: SimpleStringProperty
+    + InventoryItem()
+    + getItemValue()
+    + itemValueProperty()
+    + getItemsSerialNumber()
+    + itemSerialNumberProperty()
+    + setItemsSerialNumber(String itemsSerialNumber)
+    + getItemName()
+    + setItemName()
+    + setItemName()
+}
 @enduml
