@@ -12,8 +12,15 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation 'com.google.code.gson:gson:2.8.7'
+    // https://mvnrepository.com/artifact/org.hildan.fxgson/fx-gson
+    implementation group: 'org.hildan.fxgson', name: 'fx-gson', version: '4.0.1'
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+
+
 }
 
 test {

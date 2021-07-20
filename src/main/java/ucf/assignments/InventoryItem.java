@@ -3,22 +3,18 @@ package ucf.assignments;
 import javafx.beans.property.SimpleStringProperty;
 
 public class InventoryItem {
-    SimpleStringProperty itemValue;
-    SimpleStringProperty itemSerialNumber;
-    SimpleStringProperty itemName;
+    SimpleStringProperty itemValue = new SimpleStringProperty();
+    SimpleStringProperty itemSerialNumber= new SimpleStringProperty();
+    SimpleStringProperty itemName= new SimpleStringProperty();
 
-    public InventoryItem(SimpleStringProperty itemValue, SimpleStringProperty itemsSerialNumber, SimpleStringProperty itemName) {
-        this.itemValue = itemValue;
-        this.itemSerialNumber = itemsSerialNumber;
-        this.itemName = itemName;
+    public InventoryItem(String itemValue, String itemsSerialNumber, String itemName) {
+        this.itemValue.set(itemValue);
+        this.itemSerialNumber.set(itemsSerialNumber);
+        this.itemName.set(itemName);
     }
 
     public String getItemValue() {
         return itemValue.get();
-    }
-
-    public SimpleStringProperty itemValueProperty() {
-        return itemValue;
     }
 
     public void setItemValue(String itemValue) {
@@ -29,20 +25,12 @@ public class InventoryItem {
         return itemSerialNumber.get();
     }
 
-    public SimpleStringProperty itemSerialNumberProperty() {
-        return itemSerialNumber;
-    }
-
     public void setItemSerialNumber(String itemSerialNumber) {
         this.itemSerialNumber.set(itemSerialNumber);
     }
 
     public String getItemName() {
         return itemName.get();
-    }
-
-    public SimpleStringProperty itemNameProperty() {
-        return itemName;
     }
 
     public void setItemName(String itemName) {
