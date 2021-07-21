@@ -1,6 +1,7 @@
 package ucf.assignments;
 
 import com.google.gson.Gson;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -9,6 +10,7 @@ import org.hildan.fxgson.FxGson;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class ItemInventoryManager {
@@ -29,22 +31,23 @@ public class ItemInventoryManager {
             saveAsJsonFile(path, inventoryItemsData);
         } else if (fileExtension.equals("*.Html")) {
             saveInHTMLFile(path, inventoryItemsData);
-        } else if (fileExtension.equals("*.csv")) {
-            saveAsCSVFile(path, inventoryItemsData);
+        } else if (fileExtension.equals("*.tsv")) {
+            saveAsTSVFile(path, inventoryItemsData);
         }
 
 
     }
 
-    private void saveAsCSVFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
+    private void saveAsTSVFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
         if (!path.equals("")) {
             try {
                 FileWriter file = new FileWriter(path);
+                file.write("Value\tSerial Number\tName\n");
                 for (int i = 0; i < inventoryItemsData.size(); i++) {
-                    file.write(inventoryItemsData.get(i).getItemValue() + ",");
-                    file.write( inventoryItemsData.get(i).getItemSerialNumber() + ",");
+                    file.write(inventoryItemsData.get(i).getItemValue() + "\t");
+                    file.write(inventoryItemsData.get(i).getItemSerialNumber() + "\t");
 
-                    file.write(inventoryItemsData.get(i).getItemName() +",");
+                    file.write(inventoryItemsData.get(i).getItemName() + "\n");
                    /*
                     if (i > inventoryItemsData.size()-1){
                         file.write();
@@ -115,7 +118,7 @@ public class ItemInventoryManager {
         //fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
         FileChooser.ExtensionFilter extensionFilter1 = new FileChooser.ExtensionFilter("JSON file (*.json)", "*.json");
         FileChooser.ExtensionFilter extensionFilter2 = new FileChooser.ExtensionFilter("Html file (*.Html)", "*.Html");
-        FileChooser.ExtensionFilter extensionFilter3 = new FileChooser.ExtensionFilter("csv file (*.csv)", "*.csv");
+        FileChooser.ExtensionFilter extensionFilter3 = new FileChooser.ExtensionFilter("tsv file (*.tsv)", "*.tsv");
 
         fileChooser.getExtensionFilters().add(extensionFilter1);
         fileChooser.getExtensionFilters().add(extensionFilter2);
@@ -150,5 +153,21 @@ public class ItemInventoryManager {
                 e.printStackTrace();
             }
         }
+    }
+
+    public ObservableList<InventoryItem> search(ObservableList<InventoryItem> inventoryItemsData, String text, String tag) {
+        ObservableList<InventoryItem> itemsData = FXCollections.observableArrayList();
+        for (int i = 0; i < inventoryItemsData.size(); i++) {
+            if (tag.equals("Serial Number")) {
+                if (inventoryItemsData.get(i).getItemSerialNumber().equals(text)) {
+                    itemsData.add(inventoryItemsData.get(i));
+                }
+            }else {
+                if (inventoryItemsData.get(i).getItemName().equals(text)) {
+                    itemsData.add(inventoryItemsData.get(i));
+                }
+            }
+        }
+        return itemsData;
     }
 }

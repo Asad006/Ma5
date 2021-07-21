@@ -2,20 +2,21 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.InventoryItemsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="721.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.InventoryItemsController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -42,24 +43,27 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="40.0">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="addItemButton" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" text="+" textAlignment="CENTER" textFill="#05e820" wrapText="true">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="removeButton" mnemonicParsing="false" text="-" textFill="#ed1309">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </Pane>
+            <ToolBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0">
+
+                <items>
+                  <Button fx:id="addButtonToolBar" alignment="CENTER" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="105.0" text="Add Item" textFill="#6b5f38">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+                  <Button contentDisplay="RIGHT" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" text="Remove Item">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <ChoiceBox fx:id="choiceBoxToolBar" prefHeight="32.0" prefWidth="150.0" value="Serial Number" />
+                    <TextField fx:id="searchBarText" minWidth="30.0" onKeyTyped="#searchKeyTyped" prefHeight="32.0" prefWidth="193.0" promptText="search..." />
+                  <Button mnemonicParsing="false" onAction="#SearchButtonClicked" prefHeight="32.0" prefWidth="78.0" text="Search">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                      </items>
+            </ToolBar>
             <TableView fx:id="itemsTableView" prefHeight="489.0" prefWidth="1080.0">
               <columns>
                 <TableColumn fx:id="valueColumn" maxWidth="260.0" minWidth="60.0" prefWidth="260.0" resizable="false" text="Value">
