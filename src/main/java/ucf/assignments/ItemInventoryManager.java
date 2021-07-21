@@ -31,14 +31,14 @@ public class ItemInventoryManager {
             saveAsJsonFile(path, inventoryItemsData);
         } else if (fileExtension.equals("*.Html")) {
             saveInHTMLFile(path, inventoryItemsData);
-        } else if (fileExtension.equals("*.tsv")) {
-            saveAsTSVFile(path, inventoryItemsData);
+        } else if (fileExtension.equals("*.txt")) {
+            saveAstxtFile(path, inventoryItemsData);
         }
 
 
     }
 
-    private void saveAsTSVFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
+    private void saveAstxtFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
         if (!path.equals("")) {
             try {
                 FileWriter file = new FileWriter(path);
@@ -118,7 +118,7 @@ public class ItemInventoryManager {
         //fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
         FileChooser.ExtensionFilter extensionFilter1 = new FileChooser.ExtensionFilter("JSON file (*.json)", "*.json");
         FileChooser.ExtensionFilter extensionFilter2 = new FileChooser.ExtensionFilter("Html file (*.Html)", "*.Html");
-        FileChooser.ExtensionFilter extensionFilter3 = new FileChooser.ExtensionFilter("tsv file (*.tsv)", "*.tsv");
+        FileChooser.ExtensionFilter extensionFilter3 = new FileChooser.ExtensionFilter("txt file (*.txt)", "*.txt");
 
         fileChooser.getExtensionFilters().add(extensionFilter1);
         fileChooser.getExtensionFilters().add(extensionFilter2);
