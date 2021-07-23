@@ -16,8 +16,8 @@ import java.util.*;
 
 public class InventoryItemsController implements Initializable {
 
-    private SceneManager sceneManager = new SceneManager();
-    private ItemInventoryManager itemInventoryManager = new ItemInventoryManager();
+    private SceneManager sceneManager ;
+    private ItemInventoryManager itemInventoryManager ;
     private  EditItemController editItemController = new EditItemController();
 
 
@@ -50,6 +50,10 @@ public class InventoryItemsController implements Initializable {
     private Button editButton;
     @FXML
     private Button searchButton;
+    @FXML
+    private Button openButton;
+    @FXML
+    private Button saveButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,51 +63,30 @@ public class InventoryItemsController implements Initializable {
         Image imageAdd = new Image(getClass().getResourceAsStream("icons/add2.png"));
         Image imageEdit = new Image(getClass().getResourceAsStream("icons/edit.png"));
         Image imageSearch = new Image(getClass().getResourceAsStream("icons/search.png"));
+        Image imageOpen = new Image(getClass().getResourceAsStream("icons/open.png"));
+        Image imageSave = new Image(getClass().getResourceAsStream("icons/save.png"));
 
         addButtonToolBar.setGraphic(new ImageView(imageAdd));
         editButton.setGraphic(new ImageView(imageEdit));
         deleteButton.setGraphic(new ImageView(imgDelete));
         searchButton.setGraphic(new ImageView(imageSearch));
+        openButton.setGraphic(new ImageView(imageOpen));
+        saveButton.setGraphic(new ImageView(imageSave));
 
         choiceBoxToolBar.getItems().add("Serial Number");
         choiceBoxToolBar.getItems().add("Name");
     }
 
     @FXML
-    void addItemButtonClicked(ActionEvent event) {
-        /*
-        InventoryItem inventoryItem = new InventoryItem(valueTextField.getText(), serialNumberTextField.getText(),
-                nameTextField.getText());
-
-        if (itemInventoryManager.isSerialNumberUnique(serialNumberTextField.getText())) {
-            itemInventoryManager.add(inventoryItem);
-
-            //updateTableView();
-            valueTextField.clear();
-            serialNumberTextField.clear();
-            nameTextField.clear();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Entry Error");
-            alert.setHeaderText("Unique serial number is required.\n");
-            alert.setContentText("The Item added contains existing serial number. ");
-            alert.showAndWait();
-
-        }
-*/
-
-    }
-
-    @FXML
     void saveAsClicked(ActionEvent event) {
         itemInventoryManager.save(itemsData);
-        System.out.println("save as");
+
     }
 
     @FXML
     void SearchButtonClicked(ActionEvent event) {
         String tag = choiceBoxToolBar.getSelectionModel().getSelectedItem();
-        searchItemsData = itemInventoryManager.search(itemsData, searchBarText.getText(), tag);
+        searchItemsData = itemInventoryManager.search(searchBarText.getText(), tag);
         itemsTableView.setItems(searchItemsData);
     }
 
@@ -131,7 +114,7 @@ public class InventoryItemsController implements Initializable {
         primaryStage.setScene(sceneManager.getScene("Edit"));
         primaryStage.setTitle("Edit Item");
         primaryStage.show();
-        editItemController.loadData(getSelectedItem());
+       //editItemController.loadData(getSelectedItem());
     }
 
     public void addItem(InventoryItem item) {
@@ -141,15 +124,33 @@ public class InventoryItemsController implements Initializable {
     }
 
     public void updateTableView() {
+
+        itemsTableView.refresh();
         itemsTableView.setItems(itemInventoryManager.getData());
+        itemsTableView.refresh();
     }
 
     public InventoryItem getSelectedItem() {
-        int index = itemsTableView.getSelectionModel().getSelectedIndex();
-        return itemInventoryManager.getData().get(index);
+        int index = -2;
+         index = itemsTableView.getSelectionModel().getSelectedIndex();
+         if (index>=0){
+             return itemInventoryManager.getData().get(index);
+         }else{
+             return null;
+        }
+
     }
 
     public int getSelectedIndex() {
-        return itemsTableView.getSelectionModel().getSelectedIndex();
+        if (getSelectedItem()!=null) {
+            return itemsTableView.getSelectionModel().getSelectedIndex();
+        } else {
+            return -1;
+        }
+    }
+    @FXML
+    void openButtonClicked(ActionEvent event) {
+        itemInventoryManager.open();
+        updateTableView();
     }
 }

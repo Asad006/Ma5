@@ -11,14 +11,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SceneManager {
-    private ItemInventoryManager itemInventoryManager = new ItemInventoryManager();
+    private  ItemInventoryManager itemInventoryManager = new ItemInventoryManager();
     private Map<String, Scene> windows = new HashMap<>();
+
+    private InventoryItemsController inventoryItemsController = new InventoryItemsController(itemInventoryManager, this);
+    private AddItemController addItemController = new AddItemController(itemInventoryManager, this, inventoryItemsController);
+    EditItemController editItemController = new EditItemController(itemInventoryManager, this, inventoryItemsController);
 
     public void load() {
 
-        InventoryItemsController inventoryItemsController = new InventoryItemsController(itemInventoryManager, this);
-        AddItemController addItemController = new AddItemController(itemInventoryManager, this, inventoryItemsController);
-        EditItemController editItemController = new EditItemController(itemInventoryManager, this, inventoryItemsController);
+
 
         Parent root;
 

@@ -12,11 +12,10 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <MenuBar blendMode="EXCLUSION" BorderPane.alignment="CENTER">
             <menus>
@@ -46,7 +45,9 @@
                 <ToolBar blendMode="EXCLUSION">
 
                     <items>
-                        <Button fx:id="addButtonToolBar" alignment="CENTER" graphicTextGap="10.0" mnemonicParsing="false" onAction="#addItemToolBarClicked" prefHeight="32.0" prefWidth="105.0" text="Add Item">
+                  <Button fx:id="openButton" mnemonicParsing="false" onAction="#openButtonClicked" prefHeight="32.0" prefWidth="100.0" text="Open File" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" text="Save As" />
+                        <Button fx:id="addButtonToolBar" alignment="CENTER" graphicTextGap="10.0" mnemonicParsing="false" onAction="#addItemToolBarClicked" prefHeight="32.0" prefWidth="120.0" text="Add Item">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
@@ -57,7 +58,7 @@
                             </font>
                         </Button>
                   <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonClicked" prefHeight="32.0" prefWidth="120.0" text="Edit Item" />
-                        <ChoiceBox fx:id="choiceBoxToolBar" prefHeight="32.0" prefWidth="120.0" value="Serial Number" />
+                        <ChoiceBox fx:id="choiceBoxToolBar" prefHeight="32.0" prefWidth="110.0" value="Serial Number" />
                         <TextField fx:id="searchBarText" minWidth="30.0" onKeyTyped="#searchKeyTyped" prefHeight="32.0" prefWidth="193.0" promptText="search..." />
                         <Button fx:id="searchButton" mnemonicParsing="false" onAction="#SearchButtonClicked" prefHeight="32.0" prefWidth="120.0" text="Search">
                             <font>
@@ -66,7 +67,7 @@
                         </Button>
                     </items>
                 </ToolBar>
-                <TableView fx:id="itemsTableView" blendMode="EXCLUSION" prefHeight="489.0" prefWidth="1080.0">
+                <TableView fx:id="itemsTableView" blendMode="EXCLUSION" prefHeight="411.0" prefWidth="891.0">
                     <columns>
                         <TableColumn fx:id="valueColumn" maxWidth="260.0" minWidth="60.0" prefWidth="260.0" resizable="false" text="Value">
                             <cellValueFactory>
@@ -88,18 +89,7 @@
                         <Insets left="2.0" right="2.0" />
                     </padding>
                 </TableView>
-                <HBox prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <TextField fx:id="valueTextField" promptText="Value" />
-                        <TextField fx:id="serialNumberTextField" promptText="Serial Number" />
-                        <TextField fx:id="nameTextField" promptText="Name" />
-                        <Button mnemonicParsing="false" onAction="#addItemButtonClicked" text="Add Item" />
-                    </children>
-                </HBox>
             </children>
         </VBox>
     </center>
-    <bottom>
-        <TextField BorderPane.alignment="CENTER" />
-    </bottom>
 </BorderPane>
