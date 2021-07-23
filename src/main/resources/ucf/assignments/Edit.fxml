@@ -6,16 +6,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane blendMode="EXCLUSION" prefHeight="300.0" prefWidth="238.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="300.0" prefWidth="238.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <BorderPane layoutX="6.0" layoutY="5.0" />
-        <TextField fx:id="valueTextField" layoutX="35.0" layoutY="60.0" />
-        <TextField fx:id="serialNumberTextField" layoutX="35.0" layoutY="116.0" />
-        <TextField fx:id="nameTextField" layoutX="35.0" layoutY="178.0" />
-        <Label graphicTextGap="60.0" layoutX="35.0" layoutY="35.0" text="Enter Value:" />
-        <Label layoutX="36.0" layoutY="92.0" text="Enter serial number" />
-        <Label layoutX="35.0" layoutY="153.0" text="Enter name" />
+        <TextField fx:id="valueEditTextField" layoutX="35.0" layoutY="90.0" />
+        <TextField fx:id="serialNumberEditTextField" layoutX="35.0" layoutY="147.0" />
+        <TextField fx:id="nameTextEditField" layoutX="35.0" layoutY="209.0" />
+        <Label graphicTextGap="60.0" layoutX="35.0" layoutY="63.0" text="Enter Value:" />
+        <Label layoutX="36.0" layoutY="123.0" text="Enter serial number" />
+        <Label layoutX="35.0" layoutY="180.0" text="Enter name" />
         <Button layoutX="35.0" layoutY="263.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="25.0" prefWidth="70.0" text="Cancel" />
-        <Button layoutX="127.0" layoutY="262.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="25.0" prefWidth="70.0" text="Save" />
+        <Button layoutX="127.0" layoutY="262.0" mnemonicParsing="false" onAction="#saveEditButtonClicked" prefHeight="25.0" prefWidth="70.0" text="Save" />
+      <Button layoutX="64.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadDataEditClicked" text="Load Item" />
     </children>
 </AnchorPane>

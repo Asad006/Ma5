@@ -2,25 +2,22 @@ package ucf.assignments;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
 
-public class AddItemController {
+public class AddItemController implements Initializable {
     private SceneManager sceneManager;
     private ItemInventoryManager itemInventoryManager;
     private InventoryItemsController itemsController;
     private final Set<String> serialNumberData = new HashSet<String>();
-
-    public AddItemController(ItemInventoryManager itemInventoryManager, SceneManager sceneManager, InventoryItemsController inventoryItemsController) {
-        this.itemInventoryManager = itemInventoryManager;
-        this.sceneManager = sceneManager;
-        this.itemsController = inventoryItemsController;
-    }
 
     @FXML
     private TextField valueTextField;
@@ -28,6 +25,12 @@ public class AddItemController {
     private TextField addSerialNumberTextField;
     @FXML
     private TextField nameTextField;
+
+    public AddItemController(ItemInventoryManager itemInventoryManager, SceneManager sceneManager, InventoryItemsController inventoryItemsController) {
+        this.itemInventoryManager = itemInventoryManager;
+        this.sceneManager = sceneManager;
+        this.itemsController = inventoryItemsController;
+    }
 
     @FXML
     void addButtonClicked(ActionEvent event) {
@@ -54,7 +57,6 @@ public class AddItemController {
         }
 
     }
-
     @FXML
     void cancelButtonClicked(ActionEvent event) {
         Stage stage = (Stage) valueTextField.getScene().getWindow();
@@ -63,5 +65,10 @@ public class AddItemController {
         valueTextField.clear();
         addSerialNumberTextField.clear();
         nameTextField.clear();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        
     }
 }

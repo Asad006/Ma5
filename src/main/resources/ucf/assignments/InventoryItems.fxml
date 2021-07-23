@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="721.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <MenuBar blendMode="EXCLUSION" BorderPane.alignment="CENTER">
             <menus>
@@ -46,22 +46,22 @@
                 <ToolBar blendMode="EXCLUSION">
 
                     <items>
-                        <Button fx:id="addButtonToolBar" alignment="CENTER" graphicTextGap="10.0" mnemonicParsing="false" onAction="#addItemToolBarClicked" prefHeight="32.0" prefWidth="105.0" text="Add Item" textFill="#6b5f38">
+                        <Button fx:id="addButtonToolBar" alignment="CENTER" graphicTextGap="10.0" mnemonicParsing="false" onAction="#addItemToolBarClicked" prefHeight="32.0" prefWidth="105.0" text="Add Item">
                             <font>
-                                <Font name="System Bold" size="14.0" />
+                                <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
-                        <Button fx:id="deleteButton" contentDisplay="RIGHT" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" text="Remove Item">
+                        <Button fx:id="deleteButton" graphicTextGap="8.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" text="Remove Item" textFill="#070707">
                             <font>
-                                <Font name="System Bold" size="14.0" />
+                                <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
-                  <Button mnemonicParsing="false" onAction="#editButtonClicked" prefHeight="32.0" prefWidth="120.0" text="Edit Item" />
+                  <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonClicked" prefHeight="32.0" prefWidth="120.0" text="Edit Item" />
                         <ChoiceBox fx:id="choiceBoxToolBar" prefHeight="32.0" prefWidth="120.0" value="Serial Number" />
                         <TextField fx:id="searchBarText" minWidth="30.0" onKeyTyped="#searchKeyTyped" prefHeight="32.0" prefWidth="193.0" promptText="search..." />
-                        <Button mnemonicParsing="false" onAction="#SearchButtonClicked" prefHeight="32.0" prefWidth="78.0" text="Search">
+                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#SearchButtonClicked" prefHeight="32.0" prefWidth="120.0" text="Search">
                             <font>
-                                <Font name="System Bold" size="14.0" />
+                                <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
                     </items>

@@ -18,16 +18,11 @@ public class ItemInventoryManager {
 
     private static final FileChooser fileChooser = new FileChooser();
     private  Set<String> serialNumberData = new HashSet<>();
-    //ItemInventoryManager itemInventoryManager= new ItemInventoryManager();
-    //SceneManager sceneManager= new SceneManager();
 
-    //private final Set<String> serialNumberData= new HashSet<String>();
     private final ObservableList<InventoryItem> inventoryItemsData = FXCollections.observableArrayList();
     private ObservableList<InventoryItem> searchedItemsData = FXCollections.observableArrayList();
 
-    public ObservableList<InventoryItem> getData(){
-       return inventoryItemsData;
-    }
+
 
     public void save(ObservableList<InventoryItem> inventoryItemsData) {
 
@@ -194,6 +189,17 @@ public class ItemInventoryManager {
             serialNumberData.add(text);
             return true;
         }
+    }
 
+
+    public void editItem(InventoryItem editedItem, int index) {
+
+        inventoryItemsData.get(index).setItemName(editedItem.getItemName());
+        inventoryItemsData.get(index).setItemSerialNumber(editedItem.getItemSerialNumber());
+        inventoryItemsData.get(index).setItemValue(editedItem.getItemValue());
+    }
+
+    public ObservableList<InventoryItem> getData(){
+        return inventoryItemsData;
     }
 }

@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -47,16 +46,25 @@ public class InventoryItemsController implements Initializable {
     private TextField searchBarText;
     @FXML
     private Button deleteButton;
-
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button searchButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         itemsTableView.getItems();
-        //Creating a graphic (image)
+
         Image imgDelete = new Image(String.valueOf(getClass().getResource("icons/delete.png")));
         Image imageAdd = new Image(getClass().getResourceAsStream("icons/add2.png"));
+        Image imageEdit = new Image(getClass().getResourceAsStream("icons/edit.png"));
+        Image imageSearch = new Image(getClass().getResourceAsStream("icons/search.png"));
+
         addButtonToolBar.setGraphic(new ImageView(imageAdd));
+        editButton.setGraphic(new ImageView(imageEdit));
         deleteButton.setGraphic(new ImageView(imgDelete));
+        searchButton.setGraphic(new ImageView(imageSearch));
+
         choiceBoxToolBar.getItems().add("Serial Number");
         choiceBoxToolBar.getItems().add("Name");
     }
@@ -116,13 +124,14 @@ public class InventoryItemsController implements Initializable {
 
     @FXML
     void editButtonClicked(ActionEvent event) {
-        editItemController.setFields(getSelectedRow());
+
 
         Stage primaryStage = new Stage();
 
         primaryStage.setScene(sceneManager.getScene("Edit"));
         primaryStage.setTitle("Edit Item");
         primaryStage.show();
+        editItemController.loadData(getSelectedItem());
     }
 
     public void addItem(InventoryItem item) {
@@ -135,8 +144,12 @@ public class InventoryItemsController implements Initializable {
         itemsTableView.setItems(itemInventoryManager.getData());
     }
 
-    public InventoryItem getSelectedRow() {
+    public InventoryItem getSelectedItem() {
         int index = itemsTableView.getSelectionModel().getSelectedIndex();
         return itemInventoryManager.getData().get(index);
+    }
+
+    public int getSelectedIndex() {
+        return itemsTableView.getSelectionModel().getSelectedIndex();
     }
 }

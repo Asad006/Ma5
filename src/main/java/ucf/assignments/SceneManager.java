@@ -14,7 +14,6 @@ public class SceneManager {
     private ItemInventoryManager itemInventoryManager = new ItemInventoryManager();
     private Map<String, Scene> windows = new HashMap<>();
 
-
     public void load() {
 
         InventoryItemsController inventoryItemsController = new InventoryItemsController(itemInventoryManager, this);
