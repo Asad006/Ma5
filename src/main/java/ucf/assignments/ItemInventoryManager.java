@@ -10,12 +10,24 @@ import org.hildan.fxgson.FxGson;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class ItemInventoryManager {
 
     private static final FileChooser fileChooser = new FileChooser();
+    private  Set<String> serialNumberData = new HashSet<>();
+    //ItemInventoryManager itemInventoryManager= new ItemInventoryManager();
+    //SceneManager sceneManager= new SceneManager();
+
+    //private final Set<String> serialNumberData= new HashSet<String>();
+    private final ObservableList<InventoryItem> inventoryItemsData = FXCollections.observableArrayList();
+    private ObservableList<InventoryItem> searchedItemsData = FXCollections.observableArrayList();
+
+    public ObservableList<InventoryItem> getData(){
+       return inventoryItemsData;
+    }
 
     public void save(ObservableList<InventoryItem> inventoryItemsData) {
 
@@ -32,13 +44,13 @@ public class ItemInventoryManager {
         } else if (fileExtension.equals("*.Html")) {
             saveInHTMLFile(path, inventoryItemsData);
         } else if (fileExtension.equals("*.txt")) {
-            saveAstxtFile(path, inventoryItemsData);
+            saveAsTSVFile(path, inventoryItemsData);
         }
 
 
     }
 
-    private void saveAstxtFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
+    private void saveAsTSVFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
         if (!path.equals("")) {
             try {
                 FileWriter file = new FileWriter(path);
@@ -169,5 +181,19 @@ public class ItemInventoryManager {
             }
         }
         return itemsData;
+    }
+
+    public void add(InventoryItem inventoryItem) {
+        inventoryItemsData.add(inventoryItem);
+        //
+    }
+    public boolean isSerialNumberUnique(String text) {
+        if (serialNumberData.contains(text)) {
+            return false;
+        } else {
+            serialNumberData.add(text);
+            return true;
+        }
+
     }
 }

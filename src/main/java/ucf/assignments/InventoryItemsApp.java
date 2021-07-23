@@ -16,7 +16,13 @@ public class InventoryItemsApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
+        SceneManager sceneManager = new SceneManager();
+        sceneManager.load();
+        Scene scene = sceneManager.getScene("Inventory");
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Inventory Items Manager");
+        primaryStage.show();
+        /*
         try {
             Parent root = FXMLLoader.load(getClass().getResource("InventoryItems.fxml"));
 
@@ -27,7 +33,7 @@ public class InventoryItemsApp extends Application {
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 }
