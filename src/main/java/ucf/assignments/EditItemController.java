@@ -8,10 +8,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditItemController implements Initializable{
+public class EditItemController implements Initializable {
     private SceneManager sceneManager;
     private ItemInventoryManager itemInventoryManager;
     private InventoryItemsController inventoryItemsController;
@@ -29,7 +31,7 @@ public class EditItemController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         TextField valueEditTextField = new TextField();
-        TextField serialNumberEditTextField= new TextField();
+        TextField serialNumberEditTextField = new TextField();
         TextField nameEditTextField = new TextField();
 
         valueEditTextField.setText("");
@@ -64,7 +66,7 @@ public class EditItemController implements Initializable{
     void loadDataEditClicked(ActionEvent event) {
 
         InventoryItem item = inventoryItemsController.getSelectedItem();
-        if (item==null){
+        if (item == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Selection Error");
             alert.setHeaderText("The Selection of the row to edit is required.\n");
@@ -77,46 +79,56 @@ public class EditItemController implements Initializable{
                 }
             });
 
-        }else {
+        } else {
             System.out.println(item.itemName.toString());
             valueEditTextField.setText(item.getItemValue());
             serialNumberEditTextField.setText(item.getItemSerialNumber());
             nameTextEditField.setText(item.getItemName());
 
-            serialNumber =serialNumberEditTextField.getText();
+            serialNumber = serialNumberEditTextField.getText();
         }
 
     }
+
     @FXML
     void saveEditButtonClicked(ActionEvent event) {
 
-        InventoryItem editedItem = new InventoryItem(valueEditTextField.getText(),serialNumberEditTextField.getText(),nameTextEditField.getText());
 
-        int index = inventoryItemsController.getSelectedIndex();
 
-        if (itemInventoryManager.isSerialNumberUnique(serialNumberEditTextField.getText()) || serialNumberEditTextField.getText().equals(serialNumber)) {
+        if (itemInventoryManager.isNumericValue(valueEditTextField.getText().substring(1))) {
+            Double valueNumber = Double.parseDouble(valueEditTextField.getText().substring(1));
+            BigDecimal valueBigDecimal = new BigDecimal(valueNumber);
+            BigDecimal valueDisplayMoney = valueBigDecimal.setScale(2, RoundingMode.HALF_EVEN);
 
-            itemInventoryManager.editItem(editedItem,index);
-            inventoryItemsController.updateTableView();
+            int index = inventoryItemsController.getSelectedIndex();
 
-            Stage stage = (Stage) valueEditTextField.getScene().getWindow();
-            stage.close();
+            if (itemInventoryManager.isSerialNumberUnique(serialNumberEditTextField.getText()) || serialNumberEditTextField.getText().equals(serialNumber)) {
+                InventoryItem editedItem = new InventoryItem("$"+valueDisplayMoney.toString(), serialNumberEditTextField.getText(), nameTextEditField.getText());
+                itemInventoryManager.editItem(editedItem, index);
+                inventoryItemsController.updateTableView();
 
-            valueEditTextField.clear();
-            serialNumberEditTextField.clear();
-            nameTextEditField.clear();
-        } else {
+                Stage stage = (Stage) valueEditTextField.getScene().getWindow();
+                stage.close();
+
+                valueEditTextField.clear();
+                serialNumberEditTextField.clear();
+                nameTextEditField.clear();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Entry Error");
+                alert.setHeaderText("Unique serial number is required.\n");
+                alert.setContentText("The Item added contains existing serial number. ");
+                alert.showAndWait();
+
+            }
+        }else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Entry Error");
-            alert.setHeaderText("Unique serial number is required.\n");
-            alert.setContentText("The Item added contains existing serial number. ");
+            alert.setHeaderText("Value Number format is required.\n");
+            alert.setContentText("The value of the Item is a number. ");
             alert.showAndWait();
 
         }
-
-
-
-
     }
 /*
     public void loadData(InventoryItem item){

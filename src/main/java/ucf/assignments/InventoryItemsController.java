@@ -79,7 +79,7 @@ public class InventoryItemsController implements Initializable {
 
     @FXML
     void saveAsClicked(ActionEvent event) {
-        itemInventoryManager.save(itemsData);
+        itemInventoryManager.save();
 
     }
 

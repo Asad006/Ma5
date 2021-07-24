@@ -20,6 +20,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 
@@ -32,20 +33,20 @@ public class ItemInventoryManager {
     private ObservableList<InventoryItem> searchedItemsData = FXCollections.observableArrayList();
 
 
-    public void save(ObservableList<InventoryItem> inventoryItemsData) {
+    public void save() {
 
         File file = getFileChooser();
         String path = file.getPath();
         String fileExtension = (fileChooser.getSelectedExtensionFilter().getExtensions()).get(0);
 
         System.out.println("ext " + fileExtension);
-
+        System.out.println(path);
         System.out.println(file.getName());
         if (fileExtension.equals("*.json")) {
             System.out.println("we are here");
             saveAsJsonFile(path, inventoryItemsData);
-        } else if (fileExtension.equals("*.Html")) {
-            saveInHTMLFile(path, inventoryItemsData);
+        } else if (fileExtension.equals("*.html")) {
+            saveInHTMLFile(path);
         } else if (fileExtension.equals("*.txt")) {
             saveAsTSVFile(path, inventoryItemsData);
         }
@@ -80,32 +81,30 @@ public class ItemInventoryManager {
 
     }
 
-    private void saveInHTMLFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
+    private void saveInHTMLFile(String path) {
         if (!path.equals("")) {
             try {
                 FileWriter file = new FileWriter(path);
-                file.write("<!DOCTYPE html>\n" +
-                        "<html>\n" +
-                        "<body>\n" +
-                        "\n" +
-                        "<h2>Inventory Items Table</h2>\n" +
-                        "\n" +
-                        "<style>\n" +
-                        "table, th, td {\n" +
-                        "  border: 1px solid black;\n" +
-                        "  border-collapse: collapse;\n" +
-                        "}\n" +
-                        "th, td {\n" +
-                        "  padding: 5px;\n" +
-                        "  text-align: left;    \n" +
-                        "}\n" +
+                file.write("<!DOCTYPE html>" +
+                        "<html>" +
+                        "<body>" +
+                        "<h2>Inventory Items Table</h2>" +
+                        "<style>" +
+                        "table, th, td {" +
+                        "border: 0px solid black;" +
+                        "border-collapse: collapse;" +
+                        "}" +
+                        "th, td {" +
+                        "padding: 5px;" +
+                        "text-align: left;" +
+                        "}" +
                         "</style> " +
-                        "<table>\n" +
-                        "  <tr>\n" +
-                        "    <th>Value</th>\n" +
-                        "    <th>Serial Number</th> \n" +
-                        "    <th>Name</th>\n" +
-                        "  </tr>");
+                        "<table>" +
+                        "<tr>" +
+                        "<th>Value</th>" +
+                        "<th>Serial Number</th>" +
+                        "<th>Name</th>" +
+                        "</tr>");
                 for (int i = 0; i < inventoryItemsData.size(); i++) {
 
                     file.write("<tr><td>" + inventoryItemsData.get(i).getItemValue() + "</td>");
@@ -248,34 +247,32 @@ public class ItemInventoryManager {
 
 
         //return ;
-
+        inventoryItemsData.removeAll();
         inventoryItemsData.addAll(dateFile);
 
     }
 
     private ObservableList<InventoryItem> processHTMLFile(String path) {
         ObservableList<InventoryItem> dataList = FXCollections.observableArrayList();
+
         File input = new File(path);
         try {
             Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
             Elements table = doc.select("table");
             Elements tableRows = table.select("tr");
-            for (int i = 0; i < tableRows.size(); i++) {
-                Element row = tableRows.get(i);
-                Elements tds = row.select("td");
-                for (int j = 0; j < 3; j++) {
-                    System.out.println(tds.get(j).text());
-                }
 
-                Elements cols = row.select("td");
-                System.out.println(" ghjd");
+            Iterator<Element> ite = tableRows.select("td").iterator();
+            while (ite.hasNext()) {
+                InventoryItem item = new InventoryItem();
+                String value1=ite.next().text();
+                item.setItemValue(value1);
+                String value2=ite.next().text();
+                item.setItemSerialNumber(value2);
+                String value3=ite.next().text();
+                item.setItemName(value3);
+                dataList.add(item);
             }
-/*
-            for (Element row : table.select("tr")) {
-                    Elements tds = row.select("td");
 
-                }
-*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -310,5 +307,16 @@ public class ItemInventoryManager {
         }
 
         return dataList;
+    }
+    public static boolean isNumericValue(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 }

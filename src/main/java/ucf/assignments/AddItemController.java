@@ -7,6 +7,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -33,29 +35,44 @@ public class AddItemController implements Initializable {
 
     @FXML
     void addButtonClicked(ActionEvent event) {
+        if (itemInventoryManager.isNumericValue(valueTextField.getText())) {
+            Double valueNumber = Double.parseDouble(valueTextField.getText());
+            BigDecimal valueBigDecimal = new BigDecimal(valueNumber);
+            BigDecimal valueDisplayMoney = valueBigDecimal.setScale(2, RoundingMode.HALF_EVEN);
 
-        InventoryItem inventory = new InventoryItem(valueTextField.getText(), addSerialNumberTextField.getText(), nameTextField.getText());
+            InventoryItem inventory = new InventoryItem("$"+valueDisplayMoney.toString(), addSerialNumberTextField.getText(), nameTextField.getText());
 
-        if (itemInventoryManager.isSerialNumberUnique(addSerialNumberTextField.getText())) {
-            itemInventoryManager.add(inventory);
+            if (itemInventoryManager.isSerialNumberUnique(addSerialNumberTextField.getText())) {
+                itemInventoryManager.add(inventory);
 
-            valueTextField.clear();
-            addSerialNumberTextField.clear();
-            nameTextField.clear();
+                valueTextField.clear();
+                addSerialNumberTextField.clear();
+                nameTextField.clear();
 
-            Stage stage = (Stage) valueTextField.getScene().getWindow();
-            stage.close();
-            inventoryItemsController.updateTableView();
-        } else {
+                Stage stage = (Stage) valueTextField.getScene().getWindow();
+                stage.close();
+                inventoryItemsController.updateTableView();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Entry Error");
+                alert.setHeaderText("Unique serial number is required.\n");
+                alert.setContentText("The Item added contains existing serial number. ");
+                alert.showAndWait();
+
+            }
+        }else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Entry Error");
-            alert.setHeaderText("Unique serial number is required.\n");
-            alert.setContentText("The Item added contains existing serial number. ");
+            alert.setHeaderText("Value Number format is required.\n");
+            alert.setContentText("The value of the Item is a number. ");
             alert.showAndWait();
 
         }
-
     }
+
+
+
+
     @FXML
     void cancelButtonClicked(ActionEvent event) {
         Stage stage = (Stage) valueTextField.getScene().getWindow();

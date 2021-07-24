@@ -12,7 +12,9 @@ public class InventoryItem {
         this.itemSerialNumber.set(itemsSerialNumber);
         this.itemName.set(itemName);
     }
+    public InventoryItem() {
 
+    }
     public String getItemValue() {
         return itemValue.get();
     }
