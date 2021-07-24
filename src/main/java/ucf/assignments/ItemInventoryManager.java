@@ -14,14 +14,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 
 public class ItemInventoryManager {
@@ -240,8 +236,8 @@ public class ItemInventoryManager {
             System.out.println("we are here");
             dateFile = processJsonFile(file.getPath());
         } else if (fileExtension.equals("*.html")) {
-             dateFile = processHTMLFile(file.getPath());
-        } else  {
+            dateFile = processHTMLFile(file.getPath());
+        } else {
             dateFile = processTXTFile(file.getPath());
         }
 
@@ -264,11 +260,11 @@ public class ItemInventoryManager {
             Iterator<Element> ite = tableRows.select("td").iterator();
             while (ite.hasNext()) {
                 InventoryItem item = new InventoryItem();
-                String value1=ite.next().text();
+                String value1 = ite.next().text();
                 item.setItemValue(value1);
-                String value2=ite.next().text();
+                String value2 = ite.next().text();
                 item.setItemSerialNumber(value2);
-                String value3=ite.next().text();
+                String value3 = ite.next().text();
                 item.setItemName(value3);
                 dataList.add(item);
             }
@@ -282,6 +278,37 @@ public class ItemInventoryManager {
 
     private ObservableList<InventoryItem> processTXTFile(String path) {
         ObservableList<InventoryItem> dataList = FXCollections.observableArrayList();
+        /*
+        try {
+            for (String line : Files.readAllLines(Paths.get(path))) {
+                for (String part : line.split("\\s+")) {
+                    System.out.println(part);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        try (BufferedReader TSVReader = new BufferedReader(new FileReader(path))) {
+            String line = null;
+            while ((line = TSVReader.readLine()) != null) {
+                String[] lineItems = line.split("\t");
+
+                System.out.println(lineItems[0].trim());
+                InventoryItem item = new InventoryItem();
+                if (!lineItems[0].trim().equals("Value")){
+                    item.setItemValue(lineItems[0].trim());
+                    item.setItemSerialNumber(lineItems[1].trim());
+                    item.setItemName(lineItems[2].trim());
+                    dataList.add(item);
+                }
+
+
+
+
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
 
         return dataList;
     }
@@ -308,6 +335,7 @@ public class ItemInventoryManager {
 
         return dataList;
     }
+
     public static boolean isNumericValue(String strNum) {
         if (strNum == null) {
             return false;
@@ -319,4 +347,45 @@ public class ItemInventoryManager {
         }
         return true;
     }
+
+    public ObservableList<InventoryItem> delete(ObservableList<InventoryItem> itemsData, int index) {
+        // Get Observable Collection data of the list
+        // get the selected cell from observable collection
+        // create object of the todoTask
+        // call remove function of the observable collection
+        itemsData.remove(index);
+        return itemsData;
+    }
+
+    public void clear(ObservableList<InventoryItem> itemsData) {
+        int size = itemsData.size();
+        while (size > 0) {
+
+            itemsData.remove(size - 1);
+            size = itemsData.size();
+        }
+
+
+    }
+
+    public boolean isSerialNumberIsValid(String text) {
+        char[] textInChar = text.toCharArray();
+        int i = 0;
+        if (text.length() == 10) {
+            boolean valid = true;
+            while (valid && i < 10) {
+                if (Character.isDigit(text.charAt(i)) || Character.isLetter(text.charAt(i))) {
+                    valid = true;
+                } else {
+                    valid = false;
+                }
+                i++;
+            }
+            return valid;
+
+        } else {
+            return false;
+        }
+    }
 }
+

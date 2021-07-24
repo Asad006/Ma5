@@ -42,7 +42,7 @@ public class AddItemController implements Initializable {
 
             InventoryItem inventory = new InventoryItem("$"+valueDisplayMoney.toString(), addSerialNumberTextField.getText(), nameTextField.getText());
 
-            if (itemInventoryManager.isSerialNumberUnique(addSerialNumberTextField.getText())) {
+            if (itemInventoryManager.isSerialNumberUnique(addSerialNumberTextField.getText())&& itemInventoryManager.isSerialNumberIsValid(addSerialNumberTextField.getText())) {
                 itemInventoryManager.add(inventory);
 
                 valueTextField.clear();
@@ -55,8 +55,8 @@ public class AddItemController implements Initializable {
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Entry Error");
-                alert.setHeaderText("Unique serial number is required.\n");
-                alert.setContentText("The Item added contains existing serial number. ");
+                alert.setHeaderText("Unique serial number and must contains 10 (digital or letter) characters are required.\n");
+                alert.setContentText("The Item added could contains existing serial number or less 10 chars. ");
                 alert.showAndWait();
 
             }

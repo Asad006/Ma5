@@ -54,6 +54,8 @@ public class InventoryItemsController implements Initializable {
     private Button openButton;
     @FXML
     private Button saveButton;
+    @FXML
+    private Button clearSearchToolBar;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,6 +67,7 @@ public class InventoryItemsController implements Initializable {
         Image imageSearch = new Image(getClass().getResourceAsStream("icons/search.png"));
         Image imageOpen = new Image(getClass().getResourceAsStream("icons/open.png"));
         Image imageSave = new Image(getClass().getResourceAsStream("icons/save.png"));
+        Image imageClear = new Image(getClass().getResourceAsStream("icons/clear.png"));
 
         addButtonToolBar.setGraphic(new ImageView(imageAdd));
         editButton.setGraphic(new ImageView(imageEdit));
@@ -72,6 +75,7 @@ public class InventoryItemsController implements Initializable {
         searchButton.setGraphic(new ImageView(imageSearch));
         openButton.setGraphic(new ImageView(imageOpen));
         saveButton.setGraphic(new ImageView(imageSave));
+        clearSearchToolBar.setGraphic(new ImageView(imageClear));
 
         choiceBoxToolBar.getItems().add("Serial Number");
         choiceBoxToolBar.getItems().add("Name");
@@ -150,7 +154,29 @@ public class InventoryItemsController implements Initializable {
     }
     @FXML
     void openButtonClicked(ActionEvent event) {
+        if (itemInventoryManager.getData()!=null){
+            itemInventoryManager.clear(itemInventoryManager.getData());
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Help Message");
+            alert.setHeaderText("Opening a new File will case data loss\n");
+            alert.setContentText("Save the before opening a new file.");
+        }
         itemInventoryManager.open();
         updateTableView();
+
+    }
+    @FXML
+    void deleteButtonClicked(ActionEvent event) {
+        // call the method delete of the todolistTaskManager
+        int index = itemsTableView.getSelectionModel().getSelectedIndex();
+        itemsTableView.setItems(itemInventoryManager.delete(itemInventoryManager.getData(), index));
+
+    }
+    @FXML
+    void clearSearchToolBarClicked(ActionEvent event) {
+        searchBarText.clear();
+        updateTableView();
+
     }
 }

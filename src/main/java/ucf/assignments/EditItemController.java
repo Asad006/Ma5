@@ -95,14 +95,14 @@ public class EditItemController implements Initializable {
 
 
 
-        if (itemInventoryManager.isNumericValue(valueEditTextField.getText().substring(1))) {
+        if (itemInventoryManager.isNumericValue(valueEditTextField.getText().substring(1)) ) {
             Double valueNumber = Double.parseDouble(valueEditTextField.getText().substring(1));
             BigDecimal valueBigDecimal = new BigDecimal(valueNumber);
             BigDecimal valueDisplayMoney = valueBigDecimal.setScale(2, RoundingMode.HALF_EVEN);
 
             int index = inventoryItemsController.getSelectedIndex();
 
-            if (itemInventoryManager.isSerialNumberUnique(serialNumberEditTextField.getText()) || serialNumberEditTextField.getText().equals(serialNumber)) {
+            if ((itemInventoryManager.isSerialNumberUnique(serialNumberEditTextField.getText()) || serialNumberEditTextField.getText().equals(serialNumber))&& itemInventoryManager.isSerialNumberIsValid(serialNumberEditTextField.getText())) {
                 InventoryItem editedItem = new InventoryItem("$"+valueDisplayMoney.toString(), serialNumberEditTextField.getText(), nameTextEditField.getText());
                 itemInventoryManager.editItem(editedItem, index);
                 inventoryItemsController.updateTableView();
@@ -116,8 +116,8 @@ public class EditItemController implements Initializable {
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Entry Error");
-                alert.setHeaderText("Unique serial number is required.\n");
-                alert.setContentText("The Item added contains existing serial number. ");
+                alert.setHeaderText("Unique serial number and must contains 10 (digital or letter) characters are required.\n");
+                alert.setContentText("The Item added could contains existing serial number or less 10 chars.");
                 alert.showAndWait();
 
             }
