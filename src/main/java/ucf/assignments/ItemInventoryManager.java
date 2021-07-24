@@ -336,12 +336,12 @@ public class ItemInventoryManager {
         return dataList;
     }
 
-    public static boolean isNumericValue(String strNum) {
-        if (strNum == null) {
+    public  boolean isNumericValue(String text) {
+        if (text == null) {
             return false;
         }
         try {
-            double d = Double.parseDouble(strNum);
+            double TextDouble = Double.parseDouble(text);
         } catch (NumberFormatException nfe) {
             return false;
         }
