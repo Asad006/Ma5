@@ -1,5 +1,8 @@
 package ucf.assignments;
-
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 first_name last_name
+ */
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +20,7 @@ public class EditItemController implements Initializable {
     private SceneManager sceneManager;
     private ItemInventoryManager itemInventoryManager;
     private InventoryItemsController inventoryItemsController;
-    String serialNumber;
+    private String serialNumber;
 
     @FXML
     private TextField valueEditTextField;
@@ -51,9 +54,8 @@ public class EditItemController implements Initializable {
 
     }
 
-
     @FXML
-    void cancelButtonClicked(ActionEvent event) {
+    private void cancelButtonClicked(ActionEvent event) {
         Stage stage = (Stage) valueEditTextField.getScene().getWindow();
         stage.close();
 
@@ -63,7 +65,7 @@ public class EditItemController implements Initializable {
     }
 
     @FXML
-    void loadDataEditClicked(ActionEvent event) {
+    private void loadDataEditClicked(ActionEvent event) {
 
         InventoryItem item = inventoryItemsController.getSelectedItem();
         if (item == null) {
@@ -91,7 +93,7 @@ public class EditItemController implements Initializable {
     }
 
     @FXML
-    void saveEditButtonClicked(ActionEvent event) {
+    private void saveEditButtonClicked(ActionEvent event) {
         if (itemInventoryManager.isNameIsValid(nameTextEditField.getText())) {
             if (itemInventoryManager.isNumericValue(valueEditTextField.getText().substring(1))) {
                 Double valueNumber = Double.parseDouble(valueEditTextField.getText().substring(1));
@@ -141,12 +143,4 @@ public class EditItemController implements Initializable {
         }
 
     }
-/*
-    public void loadData(InventoryItem item){
-        item = inventoryItemsController.getSelectedItem();
-        System.out.println(item.itemName.toString());
-        valueEditTextField.setText(item.getItemName());
-        serialNumberEditTextField.setText(item.getItemSerialNumber());
-        nameTextEditField.setText(item.getItemValue());
-    }*/
 }

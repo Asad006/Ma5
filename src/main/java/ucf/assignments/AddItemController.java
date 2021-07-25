@@ -1,5 +1,8 @@
 package ucf.assignments;
-
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 first_name last_name
+ */
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,7 +37,7 @@ public class AddItemController implements Initializable {
     private TextField nameTextField;
 
     @FXML
-    void addButtonClicked(ActionEvent event) {
+    private void addButtonClicked(ActionEvent event) {
         if (itemInventoryManager.isNumericValue(valueTextField.getText())) {
             Double valueNumber = Double.parseDouble(valueTextField.getText());
             BigDecimal valueBigDecimal = new BigDecimal(valueNumber);
@@ -87,7 +90,7 @@ public class AddItemController implements Initializable {
 
 
     @FXML
-    void cancelButtonClicked(ActionEvent event) {
+    private void cancelButtonClicked(ActionEvent event) {
         Stage stage = (Stage) valueTextField.getScene().getWindow();
         stage.close();
 

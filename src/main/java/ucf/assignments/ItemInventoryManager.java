@@ -1,5 +1,8 @@
 package ucf.assignments;
-
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 first_name last_name
+ */
 import com.google.gson.Gson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,10 +37,6 @@ public class ItemInventoryManager {
         File file = getFileChooser();
         String path = file.getPath();
         String fileExtension = (fileChooser.getSelectedExtensionFilter().getExtensions()).get(0);
-
-        System.out.println("ext " + fileExtension);
-        System.out.println(path);
-        System.out.println(file.getName());
 
         if (fileExtension.equals("*.json")) {
             filesExtensionHandler.saveAsJsonFile(path, inventoryItemsData);
@@ -133,8 +132,7 @@ public class ItemInventoryManager {
 
     public void add(InventoryItem inventoryItem) {
         inventoryItemsData.add(inventoryItem);
-        System.out.println("");
-        //
+
     }
 
     public boolean isSerialNumberUnique(String text) {
@@ -151,11 +149,9 @@ public class ItemInventoryManager {
         inventoryItemsData.get(index).setItemName(editedItem.getItemName());
         inventoryItemsData.get(index).setItemSerialNumber(editedItem.getItemSerialNumber());
         inventoryItemsData.get(index).setItemValue(editedItem.getItemValue());
-        System.out.println("");
     }
 
     public ObservableList<InventoryItem> getData() {
-        System.out.println("");
         return inventoryItemsData;
 
     }

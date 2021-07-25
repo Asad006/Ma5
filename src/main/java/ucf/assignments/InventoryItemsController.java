@@ -1,5 +1,11 @@
 package ucf.assignments;
-
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 first_name last_name
+ */
+/* Icons are used according the the following licence.
+https://creativecommons.org/licenses/by/3.0/
+ */
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,9 +30,6 @@ public class InventoryItemsController implements Initializable {
 
     private SceneManager sceneManager ;
     private ItemInventoryManager itemInventoryManager ;
-    private  EditItemController editItemController = new EditItemController();
-
-
     private ObservableList<InventoryItem> itemsData = FXCollections.observableArrayList();
     private ObservableList<InventoryItem> searchItemsData = FXCollections.observableArrayList();
 

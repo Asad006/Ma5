@@ -16,7 +16,7 @@ public class SceneManager {
 
     private InventoryItemsController inventoryItemsController = new InventoryItemsController(itemInventoryManager, this);
     private AddItemController addItemController = new AddItemController(itemInventoryManager, this, inventoryItemsController);
-    EditItemController editItemController = new EditItemController(itemInventoryManager, this, inventoryItemsController);
+    private EditItemController editItemController = new EditItemController(itemInventoryManager, this, inventoryItemsController);
 
     public void load() {
 

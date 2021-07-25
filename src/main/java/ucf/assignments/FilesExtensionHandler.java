@@ -150,7 +150,6 @@ public class FilesExtensionHandler {
             while ((line = TSVReader.readLine()) != null) {
                 String[] lineItems = line.split("\t");
 
-                System.out.println(lineItems[0].trim());
                 InventoryItem item = new InventoryItem();
                 if (!lineItems[0].trim().equals("Value")) {
                     item.setItemValue(lineItems[0].trim());
@@ -162,7 +161,7 @@ public class FilesExtensionHandler {
 
             }
         } catch (Exception e) {
-            System.out.println("Something went wrong");
+           e.printStackTrace();
         }
 
         return dataList;

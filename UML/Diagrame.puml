@@ -1,9 +1,24 @@
 @startuml
 
 class InventoryItemsApp  {
-    public  start()
+
+    +main()
+    +start()
+
     }
-class InventoryItemsController {
+class AddItemController {
+    - sceneManager : SceneManager
+    - itemInventoryManager : ItemInventoryManager
+    - inventoryItemsController : InventoryItemsController
+    - Set<String> serialNumberData : String
+    - TextField valueTextField;
+    - TextField addSerialNumberTextField;
+    - TextField nameTextField
+        + AddItemController()
+        - addButtonClicked()
+        - cancelButtonClicked()
+        - void initialize()
+
 
 }
 class InventoryItem{
@@ -19,9 +34,123 @@ class InventoryItem{
     + getItemName()
     + setItemName()
     + setItemName()
+    + getValueDouble()
 }
 class ItemInventoryManager {
+    - static final FileChooser fileChooser
+    - FilesExtensionHandler filesExtensionHandler
+    - Set<String> serialNumberData : String
+    - ObservableList<InventoryItem> inventoryItemsData
+    - ObservableList<InventoryItem> searchedItemsData
+    - ObservableList<InventoryItem> sortedItemsData
+
+        - getFileChooser()
+        + save()
+        + saveInHTMLFile(String path)
+        + search()
+        + add()
+        + isSerialNumberUnique()
+        + editItem()
+        + getData()
+        + open()
+        + boolean isNumericValue(String text)
+        + delete()
+        + clear()
+        + isSerialNumberIsValid()
+        + sort()
+        + isNameIsValid()
 
 }
+class EditItemController {
+    - SceneManager sceneManager;
+    - ItemInventoryManager itemInventoryManager;
+    - InventoryItemsController inventoryItemsController;
+    - String serialNumber;
+    - TextField valueEditTextField;
+    - TextField serialNumberEditTextField;
+    - TextField nameTextEditField;
+    + void initialize()
+    + EditItemController
+    - cancelButtonClicked()
+    - loadDataEditClicked()
+    - saveEditButtonClicked(ActionEvent event)
+}
+class InventoryItemsController {
+
+    - SceneManager sceneManager
+    - ItemInventoryManager itemInventoryManager
+    - ObservableList<InventoryItem> itemsData
+    - ObservableList<InventoryItem> searchItemsData
+    - InventoryItemsController()
+    - TableView<InventoryItem> itemsTableView
+    - TextField valueTextField
+    - TextField serialNumberTextField
+    - TextField nameTextField
+    - Button addButtonToolBar
+    - ChoiceBox<String> choiceBoxToolBar
+    - TextField searchBarText;
+    - Button deleteButton;
+    + Button editButton;
+    - Button searchButton;
+    - Button openButton;
+    - Button saveButton;
+    - Button clearSearchToolBar;
+    - SplitMenuButton sortSplitMenu
+    + void initialize()
+    + SearchButtonClicked()
+    + addItemToolBarClicked()
+    + editButtonClicked()
+    + void updateTableView()
+    + InventoryItem getSelectedItem()
+    + int getSelectedIndex()
+    - openButtonClicked()
+    - deleteButtonClicked()
+    - clearSearchToolBarClicked()
+    - sortByValueClicked()
+    - sortSerialNumberClicked()
+    - sortNameClicked()
+    - saveButtonClicked()
+}
+ class SceneManager {
+    -  ItemInventoryManager itemInventoryManager;
+    - Map<String, Scene> windows = new HashMap<>();
+
+    - InventoryItemsController inventoryItemsController
+    - AddItemController addItemController
+    - EditItemController editItemController
+
+    public void load()
+    public Scene getScene(String name)
+}
+class FilesExtensionHandler {
+    + saveAsJsonFile()
+    + saveAsTSVFile(ata)
+    + saveInHTMLFile()
+    + processHTMLFile()
+    + processTXTFile()
+    + processJsonFile()
+}
+
+javafx.Application <|-- InventoryItemsApp
+
+InventoryItemsApp*--SceneManager
+
+SceneManager*--EditItemController
+SceneManager*--ItemInventoryManager
+SceneManager*--AddItemController
+SceneManager*--InventoryItemsController
+
+InventoryItem*--ItemInventoryManager
+
+ItemInventoryManager*--FilesExtensionHandler
+
+InventoryItemsController*--SceneManager
+InventoryItemsController*--ItemInventoryManager
+
+AddItemController*--InventoryItemsController
+AddItemController*--ItemInventoryManager
+
+EditItemController*--InventoryItemsController
+EditItemController*--ItemInventoryManager
 
 @enduml

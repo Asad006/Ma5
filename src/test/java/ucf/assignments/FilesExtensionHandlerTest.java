@@ -112,7 +112,6 @@ public class FilesExtensionHandlerTest extends TestCase {
         assertEquals(expected, actual);
     }
 
-
     public void testSaveInHTMLFile() {
         // Given
         // create  an object TodoListTableManager
@@ -189,7 +188,7 @@ public class FilesExtensionHandlerTest extends TestCase {
         itemListManager.add(item2);
 
         actualData=itemListManager.getData();
-        expectedData = fHandler.processTXTFile("src/test/resources/TextCaseOpen.html");
+        expectedData = fHandler.processHTMLFile("src/test/resources/TextCaseOpen.html");
 
         String actual = "";
 
@@ -288,7 +287,7 @@ public class FilesExtensionHandlerTest extends TestCase {
         itemListManager.add(item2);
 
         actualData=itemListManager.getData();
-        expectedData = fHandler.processTXTFile("src/test/resources/TextCaseOpen.json");
+        expectedData = fHandler.processJsonFile("src/test/resources/TextCaseOpen.json");
 
         String actual = "";
 

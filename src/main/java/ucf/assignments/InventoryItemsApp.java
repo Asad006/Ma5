@@ -1,6 +1,7 @@
 package ucf.assignments;
-/* Icons are used according the the following licence.
-https://creativecommons.org/licenses/by/3.0/
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 first_name last_name
  */
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,18 +25,7 @@ public class InventoryItemsApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Inventory Items Manager");
         primaryStage.show();
-        /*
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("InventoryItems.fxml"));
 
-            Scene scene = new Scene(root);
-
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Inventory Items Manager");
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
 }
