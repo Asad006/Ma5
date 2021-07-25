@@ -23,7 +23,7 @@ To sort the Items by serial number,value, and  name, click on *Sort By little tr
  toolbar then choose the attribute which you want to sort by. The sorted table will be updated the data in the table. 
 
 #### Edit  item inventory
-To edit  the inventory items, select the item to edit and then click on the *edit item icon*. A window will pop up, and then
+To edit  the inventory items, select the item to edit and then click on the *edit item icon *. A window will pop up, and then
 click on **load**  to load data in the window. after editing the data click on *Save* to save changes.
 
 #### Search in  the list of items
