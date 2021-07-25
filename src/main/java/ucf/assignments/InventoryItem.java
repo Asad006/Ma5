@@ -1,6 +1,14 @@
 package ucf.assignments;
 
 import javafx.beans.property.SimpleStringProperty;
+//  class instance variable
+//  Name : SimpleStringProperty
+//  serial number : SimpleStringProperty
+//  value : SimpleDateFormat
+// constructors
+//  InventoryItem(String name, String value, String serial number)
+// set setters for the instance variables
+// get getters for the instance variables
 
 public class InventoryItem {
     SimpleStringProperty itemValue = new SimpleStringProperty();

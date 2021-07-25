@@ -33,6 +33,7 @@ public class EditItemController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         TextField valueEditTextField = new TextField();
         TextField serialNumberEditTextField = new TextField();
         TextField nameEditTextField = new TextField();
@@ -66,6 +67,8 @@ public class EditItemController implements Initializable {
 
     @FXML
     private void loadDataEditClicked(ActionEvent event) {
+        // get the index of the selected row else show error message
+        //load data by calling manager
 
         InventoryItem item = inventoryItemsController.getSelectedItem();
         if (item == null) {
@@ -94,6 +97,11 @@ public class EditItemController implements Initializable {
 
     @FXML
     private void saveEditButtonClicked(ActionEvent event) {
+        // check if value is numeric value is no show error message
+        // parse the string to double and apply rounding to  it
+        // check if name valid if not show error message
+        //check serial number is unique and has 8 characters id not show error message
+        //add date to data in the manager
         if (itemInventoryManager.isNameIsValid(nameTextEditField.getText())) {
             if (itemInventoryManager.isNumericValue(valueEditTextField.getText().substring(1))) {
                 Double valueNumber = Double.parseDouble(valueEditTextField.getText().substring(1));

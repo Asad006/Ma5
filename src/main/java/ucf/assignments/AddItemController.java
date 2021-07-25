@@ -17,13 +17,14 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class AddItemController implements Initializable {
+public class AddItemController  {
     private SceneManager sceneManager;
     private ItemInventoryManager itemInventoryManager;
     private InventoryItemsController inventoryItemsController;
     private final Set<String> serialNumberData = new HashSet<String>();
 
     public AddItemController(ItemInventoryManager itemInventoryManager, SceneManager sceneManager, InventoryItemsController inventoryItemsController) {
+        // constructor
         this.itemInventoryManager = itemInventoryManager;
         this.sceneManager = sceneManager;
         this.inventoryItemsController = inventoryItemsController;
@@ -38,6 +39,11 @@ public class AddItemController implements Initializable {
 
     @FXML
     private void addButtonClicked(ActionEvent event) {
+        // check if value is numeric value is no show error message
+        // parse the string to double and apply rounding to  it
+        // check if name valid if not show error message
+        //check serial number is unique and has 8 characters id not show error message
+        //add date to data in the manager
         if (itemInventoryManager.isNumericValue(valueTextField.getText())) {
             Double valueNumber = Double.parseDouble(valueTextField.getText());
             BigDecimal valueBigDecimal = new BigDecimal(valueNumber);
@@ -91,6 +97,8 @@ public class AddItemController implements Initializable {
 
     @FXML
     private void cancelButtonClicked(ActionEvent event) {
+        // close stage
+        // clear fields
         Stage stage = (Stage) valueTextField.getScene().getWindow();
         stage.close();
 
@@ -99,8 +107,5 @@ public class AddItemController implements Initializable {
         nameTextField.clear();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
-    }
 }

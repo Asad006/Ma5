@@ -6,8 +6,7 @@ package ucf.assignments;
 /* Icons are used according the the following licence.
 https://creativecommons.org/licenses/by/3.0/
  */
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,12 +14,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.TableHeaderRow;
-import javafx.scene.control.skin.TableViewSkinBase;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
+
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -28,8 +25,8 @@ import java.util.*;
 
 public class InventoryItemsController implements Initializable {
 
-    private SceneManager sceneManager ;
-    private ItemInventoryManager itemInventoryManager ;
+    private SceneManager sceneManager;
+    private ItemInventoryManager itemInventoryManager;
     private ObservableList<InventoryItem> itemsData = FXCollections.observableArrayList();
     private ObservableList<InventoryItem> searchItemsData = FXCollections.observableArrayList();
 
@@ -71,6 +68,8 @@ public class InventoryItemsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //initialise the icons for the toolBar
+        // initialize the choices for choiceBox
         itemsTableView.getItems();
 
         Image imgDelete = new Image(String.valueOf(getClass().getResource("icons/delete.png")));
@@ -98,20 +97,32 @@ public class InventoryItemsController implements Initializable {
 
     @FXML
     void SearchButtonClicked(ActionEvent event) {
+        //create a tap that refers to the selected choice
+        //call search method in the managerItems
+        // update the tableview
         String tag = choiceBoxToolBar.getSelectionModel().getSelectedItem();
         searchItemsData = itemInventoryManager.search(searchBarText.getText(), tag);
         itemsTableView.setItems(searchItemsData);
     }
+
     @FXML
     void addItemToolBarClicked(ActionEvent event) {
+        //get the scene for adding items
+        // create a new stage
+        // show the new stage
+
         Stage primaryStage = new Stage();
 
         primaryStage.setScene(sceneManager.getScene("Add"));
         primaryStage.setTitle("Add Item");
         primaryStage.show();
     }
+
     @FXML
     void editButtonClicked(ActionEvent event) {
+        //get the scene for editing item
+        // create a new stage
+        // show the new stage
         Stage primaryStage = new Stage();
 
         primaryStage.setScene(sceneManager.getScene("Edit"));
@@ -120,33 +131,42 @@ public class InventoryItemsController implements Initializable {
     }
 
     public void updateTableView() {
-
+        // updates the tableview
         itemsTableView.refresh();
         itemsTableView.setItems(itemInventoryManager.getData());
         itemsTableView.refresh();
     }
 
     public InventoryItem getSelectedItem() {
+        // check if the index in the selected model greater than zero if it true retrun index
+        //if nut return null
         int index = -2;
-         index = itemsTableView.getSelectionModel().getSelectedIndex();
-         if (index>=0){
-             return itemInventoryManager.getData().get(index);
-         }else{
-             return null;
+        index = itemsTableView.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            return itemInventoryManager.getData().get(index);
+        } else {
+            return null;
         }
 
     }
 
     public int getSelectedIndex() {
-        if (getSelectedItem()!=null) {
+        // check if the index in the selected model greater than zero if it true retrun index
+        //if nut return -1
+        if (getSelectedItem() != null) {
             return itemsTableView.getSelectionModel().getSelectedIndex();
         } else {
             return -1;
         }
     }
+
     @FXML
     void openButtonClicked(ActionEvent event) {
-        if (itemInventoryManager.getData()!=null){
+        //if the data exist clear data
+        // load data
+        //call open file method in the manager
+        // update the view
+        if (itemInventoryManager.getData() != null) {
             itemInventoryManager.clear(itemInventoryManager.getData());
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -158,38 +178,53 @@ public class InventoryItemsController implements Initializable {
         updateTableView();
 
     }
+
     @FXML
     void deleteButtonClicked(ActionEvent event) {
-        // call the method delete of the todolistTaskManager
+        // call the method delete of the itemsManager
         int index = itemsTableView.getSelectionModel().getSelectedIndex();
         itemsTableView.setItems(itemInventoryManager.delete(itemInventoryManager.getData(), index));
 
     }
+
     @FXML
     void clearSearchToolBarClicked(ActionEvent event) {
+        //clear text fields
+        //update the tableview
         searchBarText.clear();
         updateTableView();
 
     }
+
     @FXML
     void sortByValueClicked(ActionEvent event) {
+        //call sort method
+        //update the tableview
         itemInventoryManager.sort("Value");
         updateTableView();
 
     }
+
     @FXML
     void sortSerialNumberClicked(ActionEvent event) {
+        //call sort method
+        //update the tableview
         itemInventoryManager.sort("Serial number");
         updateTableView();
     }
+
     @FXML
     void sortNameClicked(ActionEvent event) {
+        //call sort method
+        //update the tableview
         itemInventoryManager.sort("Name");
         updateTableView();
     }
 
     @FXML
     void saveButtonClicked(ActionEvent event) {
+        //call save method in the manager
+
         itemInventoryManager.save();
     }
 }

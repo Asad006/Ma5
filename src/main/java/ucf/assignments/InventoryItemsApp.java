@@ -19,6 +19,10 @@ public class InventoryItemsApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        // create a reference to sceneManger
+        // call load scene  to get the first scene
+        // show the scene
+
         SceneManager sceneManager = new SceneManager();
         sceneManager.load();
         Scene scene = sceneManager.getScene("Inventory");

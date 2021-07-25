@@ -19,7 +19,11 @@ import java.util.Iterator;
 public class FilesExtensionHandler {
 
     public void saveAsJsonFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
-
+        // create json file
+        // the data of the tableView
+        // Do serialization of the data to json format
+        // write the data in the file
+        // close the file
         Gson gson = FxGson.coreBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
         if (!path.equals("")) {
@@ -46,6 +50,11 @@ public class FilesExtensionHandler {
     }
 
     public void saveAsTSVFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
+        // create tsv file
+        // the data of the tableView
+        // Do serialization of the data to tsv format
+        // write the data in the file
+        // close the file
         if (!path.equals("")) {
             try {
                 FileWriter file = new FileWriter(path);
@@ -73,6 +82,12 @@ public class FilesExtensionHandler {
     }
 
     public void saveInHTMLFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
+        // create html file
+        // the data of the tableView
+        // Do serialization of the data to html format
+        // write the data in the file
+        // close the file
+
         if (!path.equals("")) {
             try {
                 FileWriter file = new FileWriter(path);
@@ -115,6 +130,11 @@ public class FilesExtensionHandler {
     }
 
     public ObservableList<InventoryItem> processHTMLFile(String path) {
+        //parse HTML file
+        //get table
+        // get rows
+        //get elements of the rows and add them to InventoryItem object
+        // add object to the data list
         ObservableList<InventoryItem> dataList = FXCollections.observableArrayList();
 
         File input = new File(path);
@@ -143,6 +163,11 @@ public class FilesExtensionHandler {
     }
 
     public ObservableList<InventoryItem> processTXTFile(String path) {
+        //parse TXT file
+        //get table
+        // get rows
+        //get elements of the rows and add them to InventoryItem object
+        // add object to the data list
         ObservableList<InventoryItem> dataList = FXCollections.observableArrayList();
 
         try (BufferedReader TSVReader = new BufferedReader(new FileReader(path))) {
@@ -161,13 +186,18 @@ public class FilesExtensionHandler {
 
             }
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
 
         return dataList;
     }
 
     public ObservableList<InventoryItem> processJsonFile(String path) {
+        //parse json file
+        //get table
+        // get rows
+        //get elements of the rows and add them to InventoryItem object
+        // add object to the data list
         ObservableList<InventoryItem> dataList = FXCollections.observableArrayList();
         InventoryItem[] itemDataArray;
 

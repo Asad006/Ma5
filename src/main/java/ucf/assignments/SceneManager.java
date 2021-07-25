@@ -1,16 +1,22 @@
 package ucf.assignments;
 
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SceneManager {
+    // create object of type itemInventoryManager
+    //create object of type addItemController
+    //create object of type editItemController
+    //load the scenes in a new FXMLLoader and store tem in HashMap
+    // create method get scene
+
+
     private  ItemInventoryManager itemInventoryManager = new ItemInventoryManager();
     private Map<String, Scene> windows = new HashMap<>();
 
@@ -19,8 +25,7 @@ public class SceneManager {
     private EditItemController editItemController = new EditItemController(itemInventoryManager, this, inventoryItemsController);
 
     public void load() {
-
-
+    // load the scenes in a new FXMLLoader and store tem in HashMap.
 
         Parent root;
 
@@ -59,6 +64,7 @@ public class SceneManager {
 
 
     public Scene getScene(String name) {
+        //return selected scene
         return windows.get(name);
     }
 }

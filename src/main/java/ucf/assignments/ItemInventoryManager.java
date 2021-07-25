@@ -3,19 +3,11 @@ package ucf.assignments;
  *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 first_name last_name
  */
-import com.google.gson.Gson;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.hildan.fxgson.FxGson;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.util.*;
@@ -33,7 +25,10 @@ public class ItemInventoryManager {
 
 
     public void save() {
-
+        // open json file
+        // the data of the tableView
+        // write the data in the file
+        // close the file
         File file = getFileChooser();
         String path = file.getPath();
         String fileExtension = (fileChooser.getSelectedExtensionFilter().getExtensions()).get(0);
@@ -44,7 +39,6 @@ public class ItemInventoryManager {
         } else if (fileExtension.equals("*.html")) {
             filesExtensionHandler.saveInHTMLFile(path, inventoryItemsData);
 
-            saveInHTMLFile(path);
         } else if (fileExtension.equals("*.txt")) {
             filesExtensionHandler.saveAsTSVFile(path, inventoryItemsData);
         }
@@ -52,52 +46,13 @@ public class ItemInventoryManager {
 
     }
 
-    private void saveInHTMLFile(String path) {
-        if (!path.equals("")) {
-            try {
-                FileWriter file = new FileWriter(path);
-                file.write("<!DOCTYPE html>" +
-                        "<html>" +
-                        "<body>" +
-                        "<h2>Inventory Items Table</h2>" +
-                        "<style>" +
-                        "table, th, td {" +
-                        "border: 0px solid black;" +
-                        "border-collapse: collapse;" +
-                        "}" +
-                        "th, td {" +
-                        "padding: 5px;" +
-                        "text-align: left;" +
-                        "}" +
-                        "</style> " +
-                        "<table>" +
-                        "<tr>" +
-                        "<th>Value</th>" +
-                        "<th>Serial Number</th>" +
-                        "<th>Name</th>" +
-                        "</tr>");
-                for (int i = 0; i < inventoryItemsData.size(); i++) {
-
-                    file.write("<tr><td>" + inventoryItemsData.get(i).getItemValue() + "</td>");
-                    file.write("<td>" + inventoryItemsData.get(i).getItemSerialNumber() + "</td>");
-                    file.write("<td>" + inventoryItemsData.get(i).getItemName() + "</td></tr>");
-                }
-
-
-                file.write("</tr>" + "</table>" + "</body>" + "</html>");
-                file.flush();
-                file.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
     private File getFileChooser() {
+        // create a nes stage
+        // set the extensions filter for the chooser
+        //show file chooser
+        //return the path
+
         Stage stage = new Stage();
-        //FileChooser fileChooser = new FileChooser();
 
         fileChooser.setTitle("Save File");
         //fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"));
@@ -115,6 +70,8 @@ public class ItemInventoryManager {
     }
 
     public ObservableList<InventoryItem> search(String text, String tag) {
+        // traverse the data and check of match if yes add the matched data to sorted data
+
         ObservableList<InventoryItem> itemsData = FXCollections.observableArrayList();
         for (int i = 0; i < inventoryItemsData.size(); i++) {
             if (tag.equals("Serial Number")) {
@@ -131,11 +88,15 @@ public class ItemInventoryManager {
     }
 
     public void add(InventoryItem inventoryItem) {
+        // add item to the observable list
         inventoryItemsData.add(inventoryItem);
 
     }
 
     public boolean isSerialNumberUnique(String text) {
+        // check if the set contains the text
+        //if not add it to the set and return true
+        // else return false
         if (serialNumberData.contains(text)) {
             return false;
         } else {
@@ -145,13 +106,14 @@ public class ItemInventoryManager {
     }
 
     public void editItem(InventoryItem editedItem, int index) {
-
+        // set the data in observable list
         inventoryItemsData.get(index).setItemName(editedItem.getItemName());
         inventoryItemsData.get(index).setItemSerialNumber(editedItem.getItemSerialNumber());
         inventoryItemsData.get(index).setItemValue(editedItem.getItemValue());
     }
 
     public ObservableList<InventoryItem> getData() {
+        //return observable list data
         return inventoryItemsData;
 
     }
@@ -174,7 +136,7 @@ public class ItemInventoryManager {
 
         File file = fileChooser.showOpenDialog(stage);
 
-        if (file!=null){
+        if (file != null) {
             String fileExtension = (fileChooser.getSelectedExtensionFilter().getExtensions()).get(0);
             if (fileExtension.equals("*.json")) {
                 dateFile = filesExtensionHandler.processJsonFile(file.getPath());
@@ -186,14 +148,16 @@ public class ItemInventoryManager {
                 dateFile = filesExtensionHandler.processTXTFile(file.getPath());
 
             }
-        }else {
-            dateFile=null;
+        } else {
+            dateFile = null;
         }
 
         inventoryItemsData.addAll(dateFile);
     }
 
     public boolean isNumericValue(String text) {
+        // check if text has numeric value and return true
+        // else return false
         if (text == null) {
             return false;
         }
@@ -210,7 +174,7 @@ public class ItemInventoryManager {
         // get the selected cell from observable collection
         // create object of the todoTask
         // call remove function of the observable collection
-        if (index>=0){
+        if (index >= 0) {
             itemsData.remove(index);
         }
 
@@ -218,6 +182,7 @@ public class ItemInventoryManager {
     }
 
     public void clear(ObservableList<InventoryItem> itemsData) {
+        // traverse the list and remove the elements
         int size = itemsData.size();
         while (size > 0) {
 
@@ -227,7 +192,9 @@ public class ItemInventoryManager {
     }
 
     public boolean isSerialNumberIsValid(String text) {
-        char[] textInChar = text.toCharArray();
+        //traverse the characters of the text and check if there are letters or digits and set valid to true
+        //else set valid to false
+        // return valid
         int i = 0;
         if (text.length() == 10) {
             boolean valid = true;
@@ -247,15 +214,17 @@ public class ItemInventoryManager {
     }
 
     public void sort(String tag) {
+        //check the tag
+        // set comparator related to each tag
         // call the built in sort method of the Observable Object.
 
-        if (tag.equals("Value") ){
+        if (tag.equals("Value")) {
             Comparator<InventoryItem> compare = Comparator.comparing(InventoryItem::getValueInDouble);
             FXCollections.sort(inventoryItemsData, compare);
-        }else if(tag.equals("Serial number")){
+        } else if (tag.equals("Serial number")) {
             Comparator<InventoryItem> compare = Comparator.comparing(InventoryItem::getItemSerialNumber);
             FXCollections.sort(inventoryItemsData, compare);
-        }else if (tag.equals("Name")){
+        } else if (tag.equals("Name")) {
             Comparator<InventoryItem> compare = Comparator.comparing(InventoryItem::getItemName);
             FXCollections.sort(inventoryItemsData, compare);
         }
@@ -263,9 +232,11 @@ public class ItemInventoryManager {
     }
 
     public boolean isNameIsValid(String text) {
-        if (text.length()>1 && text.length()<267){
+        // check if the text character are between 2 and 265 and return true
+        //else return false
+        if (text.length() > 1 && text.length() < 257) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
