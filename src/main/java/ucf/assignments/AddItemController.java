@@ -40,37 +40,50 @@ public class AddItemController implements Initializable {
             BigDecimal valueBigDecimal = new BigDecimal(valueNumber);
             BigDecimal valueDisplayMoney = valueBigDecimal.setScale(2, RoundingMode.HALF_EVEN);
 
-            InventoryItem inventory = new InventoryItem("$"+valueDisplayMoney.toString(), addSerialNumberTextField.getText(), nameTextField.getText());
+            if (itemInventoryManager.isNameIsValid(nameTextField.getText())) {
 
-            if (itemInventoryManager.isSerialNumberUnique(addSerialNumberTextField.getText())&& itemInventoryManager.isSerialNumberIsValid(addSerialNumberTextField.getText())) {
-                itemInventoryManager.add(inventory);
+                if (itemInventoryManager.isSerialNumberUnique(addSerialNumberTextField.getText()) &&
+                        itemInventoryManager.isSerialNumberIsValid(addSerialNumberTextField.getText())) {
 
-                valueTextField.clear();
-                addSerialNumberTextField.clear();
-                nameTextField.clear();
 
-                Stage stage = (Stage) valueTextField.getScene().getWindow();
-                stage.close();
-                inventoryItemsController.updateTableView();
+                    InventoryItem inventory = new InventoryItem("$" + valueDisplayMoney.toString(),
+                            addSerialNumberTextField.getText(), nameTextField.getText());
+
+                    itemInventoryManager.add(inventory);
+
+                    valueTextField.clear();
+                    addSerialNumberTextField.clear();
+                    nameTextField.clear();
+
+                    Stage stage = (Stage) valueTextField.getScene().getWindow();
+                    stage.close();
+                    inventoryItemsController.updateTableView();
+
+
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Entry Error");
+                    alert.setHeaderText("Unique serial number and must contains 10 (digital or letter) characters are required.\n");
+                    alert.setContentText("The Item added could contains existing serial number or less 10 chars. ");
+                    alert.showAndWait();
+
+                }
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Entry Error");
-                alert.setHeaderText("Unique serial number and must contains 10 (digital or letter) characters are required.\n");
-                alert.setContentText("The Item added could contains existing serial number or less 10 chars. ");
+                alert.setHeaderText("the must have 2 to 256 characters in length \n");
+                alert.setContentText("Please. Try again. ");
                 alert.showAndWait();
 
             }
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Entry Error");
             alert.setHeaderText("Value Number format is required.\n");
             alert.setContentText("The value of the Item is a number. ");
             alert.showAndWait();
-
         }
     }
-
-
 
 
     @FXML

@@ -92,47 +92,54 @@ public class EditItemController implements Initializable {
 
     @FXML
     void saveEditButtonClicked(ActionEvent event) {
+        if (itemInventoryManager.isNameIsValid(nameTextEditField.getText())) {
+            if (itemInventoryManager.isNumericValue(valueEditTextField.getText().substring(1))) {
+                Double valueNumber = Double.parseDouble(valueEditTextField.getText().substring(1));
+                BigDecimal valueBigDecimal = new BigDecimal(valueNumber);
+                BigDecimal valueDisplayMoney = valueBigDecimal.setScale(2, RoundingMode.HALF_EVEN);
 
+                int index = inventoryItemsController.getSelectedIndex();
 
-        if (itemInventoryManager.isNumericValue(valueEditTextField.getText().substring(1))) {
-            Double valueNumber = Double.parseDouble(valueEditTextField.getText().substring(1));
-            BigDecimal valueBigDecimal = new BigDecimal(valueNumber);
-            BigDecimal valueDisplayMoney = valueBigDecimal.setScale(2, RoundingMode.HALF_EVEN);
+                if ((itemInventoryManager.isSerialNumberUnique(serialNumberEditTextField.getText()) ||
+                        serialNumberEditTextField.getText().equals(serialNumber)) &&
+                        itemInventoryManager.isSerialNumberIsValid(serialNumberEditTextField.getText())) {
 
-            int index = inventoryItemsController.getSelectedIndex();
+                    InventoryItem editedItem = new InventoryItem("$" + valueDisplayMoney.toString(),
+                            serialNumberEditTextField.getText(), nameTextEditField.getText());
+                    itemInventoryManager.editItem(editedItem, index);
 
-            if ((itemInventoryManager.isSerialNumberUnique(serialNumberEditTextField.getText()) ||
-                    serialNumberEditTextField.getText().equals(serialNumber)) &&
-                    itemInventoryManager.isSerialNumberIsValid(serialNumberEditTextField.getText())) {
+                    inventoryItemsController.updateTableView();
 
-                InventoryItem editedItem = new InventoryItem("$" + valueDisplayMoney.toString(),
-                        serialNumberEditTextField.getText(), nameTextEditField.getText());
-                itemInventoryManager.editItem(editedItem, index);
+                    Stage stage = (Stage) valueEditTextField.getScene().getWindow();
+                    stage.close();
 
-                inventoryItemsController.updateTableView();
+                    valueEditTextField.clear();
+                    serialNumberEditTextField.clear();
+                    nameTextEditField.clear();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Entry Error");
+                    alert.setHeaderText("Unique serial number and must contains 10 (digital or letter) characters are required.\n");
+                    alert.setContentText("The Item added could contains existing serial number or less 10 chars.");
+                    alert.showAndWait();
 
-                Stage stage = (Stage) valueEditTextField.getScene().getWindow();
-                stage.close();
-
-                valueEditTextField.clear();
-                serialNumberEditTextField.clear();
-                nameTextEditField.clear();
+                }
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Entry Error");
-                alert.setHeaderText("Unique serial number and must contains 10 (digital or letter) characters are required.\n");
-                alert.setContentText("The Item added could contains existing serial number or less 10 chars.");
+                alert.setHeaderText("Value Number format is required.\n");
+                alert.setContentText("The value of the Item is a number. ");
                 alert.showAndWait();
 
             }
-        } else {
+        }else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Entry Error");
-            alert.setHeaderText("Value Number format is required.\n");
-            alert.setContentText("The value of the Item is a number. ");
+            alert.setHeaderText("the must have 2 to 256 characters in length \n");
+            alert.setContentText("Please. Try again. ");
             alert.showAndWait();
-
         }
+
     }
 /*
     public void loadData(InventoryItem item){

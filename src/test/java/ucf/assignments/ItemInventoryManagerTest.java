@@ -64,6 +64,7 @@ public class ItemInventoryManagerTest extends TestCase {
 
         assertEquals(expected, actual);
     }
+
     public void testOpen_load_file() {
         // load File
         // create an object of type ItemListManger
@@ -447,5 +448,33 @@ public class ItemInventoryManagerTest extends TestCase {
         actualData = itemListManager.getData();
 
         assertEquals(expectedData, actualData);
+    }
+
+    public void testOpen() {
+    }
+
+    public void testIsNameIsValid() {
+        // Given
+        // create  an object ItemInventoryManager
+        // String text yo simulate text entry text
+
+        // when...
+        // get the row to be deleted.
+        // call method testIsNameIs Valid
+
+        // then
+        // assertFalse if does not meet requirements
+        // assertTrue if does not meet requirements
+
+        ItemInventoryManager itemInventoryManager = new ItemInventoryManager();
+        String textTest = "UCF";
+        String textTest1 = "U";
+        String textTest2 = "Gdjhfdjhdgdfhgbvgvfvfgdxzfdxfdkkjbdfdghsfdshfgdsfgsdhgfsdhfgsdhfgdshfgsdhfdshfdsjhfgsdfhds" +
+                "gfhjdsgfdshfgdssjhfgdsjhfgdshgdsgdsfhdsgfdshsGdjhfdjhdgdfhgbvgvfvfgdxzfdxfdkkjbdfdghsfdshfgdsfgsdhgfsd" +
+                "hfgsdhfgdshfgsdhfdshfdsjhfgsdfhdsgfhjdsgfdshfgdssjhfgdsjhfgdshgdsgdsfhdsgfdshs";
+
+        assertTrue(itemInventoryManager.isNameIsValid(textTest));
+        assertFalse(itemInventoryManager.isNameIsValid(textTest1));
+        assertFalse(itemInventoryManager.isNameIsValid(textTest2));
     }
 }

@@ -228,8 +228,6 @@ public class ItemInventoryManager {
             itemsData.remove(size - 1);
             size = itemsData.size();
         }
-
-
     }
 
     public boolean isSerialNumberIsValid(String text) {
@@ -266,6 +264,14 @@ public class ItemInventoryManager {
             FXCollections.sort(inventoryItemsData, compare);
         }
 
+    }
+
+    public boolean isNameIsValid(String text) {
+        if (text.length()>1 && text.length()<267){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
 
