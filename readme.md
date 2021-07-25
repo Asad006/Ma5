@@ -27,6 +27,6 @@ To edit  the inventory items, select the item to edit and then click on the *edi
 click on **load**  to load data in the window. after editing the data click on *Save* to save changes.
 
 #### Search in  the list of items
-To search the Items by name or serial number, click on *Sort By little triangle*  then choose the attribute which you want to search by.
+To search the Items by name or serial number, click on *search By little triangle*  then choose the attribute which you want to search by.
 located at the top right of the toot bar. The search results  will be updated in the table. To go back the normal view,
 just click on *X* near the search bar.
