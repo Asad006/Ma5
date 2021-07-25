@@ -38,4 +38,9 @@ public class InventoryItem {
     public void setItemName(String itemName) {
         this.itemName.set(itemName);
     }
+
+    public double getValueInDouble(){
+        //String val =itemValue.get().s;
+        return Double.parseDouble( itemValue.get().substring(1));
+    }
 }

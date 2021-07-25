@@ -27,6 +27,7 @@ public class ItemInventoryManager {
 
     private final ObservableList<InventoryItem> inventoryItemsData = FXCollections.observableArrayList();
     private ObservableList<InventoryItem> searchedItemsData = FXCollections.observableArrayList();
+    private ObservableList<InventoryItem> sortedItemsData;
 
 
     public void save() {
@@ -243,7 +244,7 @@ public class ItemInventoryManager {
 
 
         //return ;
-        inventoryItemsData.removeAll();
+
         inventoryItemsData.addAll(dateFile);
 
     }
@@ -295,14 +296,12 @@ public class ItemInventoryManager {
 
                 System.out.println(lineItems[0].trim());
                 InventoryItem item = new InventoryItem();
-                if (!lineItems[0].trim().equals("Value")){
+                if (!lineItems[0].trim().equals("Value")) {
                     item.setItemValue(lineItems[0].trim());
                     item.setItemSerialNumber(lineItems[1].trim());
                     item.setItemName(lineItems[2].trim());
                     dataList.add(item);
                 }
-
-
 
 
             }
@@ -336,7 +335,7 @@ public class ItemInventoryManager {
         return dataList;
     }
 
-    public  boolean isNumericValue(String text) {
+    public boolean isNumericValue(String text) {
         if (text == null) {
             return false;
         }
@@ -353,7 +352,10 @@ public class ItemInventoryManager {
         // get the selected cell from observable collection
         // create object of the todoTask
         // call remove function of the observable collection
-        itemsData.remove(index);
+        if (index>=0){
+            itemsData.remove(index);
+        }
+
         return itemsData;
     }
 
@@ -386,6 +388,28 @@ public class ItemInventoryManager {
         } else {
             return false;
         }
+    }
+
+
+    public void SortedData(ObservableList<InventoryItem> items) {
+        sortedItemsData=items;
+
+
+    }
+    public void sort(String tag) {
+        // call the built in sort method of the Observable Object.
+
+        if (tag.equals("Value") ){
+            Comparator<InventoryItem> compare = Comparator.comparing(InventoryItem::getValueInDouble);
+            FXCollections.sort(inventoryItemsData, compare);
+        }else if(tag.equals("Serial number")){
+            Comparator<InventoryItem> compare = Comparator.comparing(InventoryItem::getItemSerialNumber);
+            FXCollections.sort(inventoryItemsData, compare);
+        }else if (tag.equals("Name")){
+            Comparator<InventoryItem> compare = Comparator.comparing(InventoryItem::getItemName);
+            FXCollections.sort(inventoryItemsData, compare);
+        }
+
     }
 }
 

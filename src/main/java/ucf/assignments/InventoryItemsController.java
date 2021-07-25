@@ -1,14 +1,20 @@
 package ucf.assignments;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.skin.TableHeaderRow;
+import javafx.scene.control.skin.TableViewSkinBase;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -23,6 +29,7 @@ public class InventoryItemsController implements Initializable {
 
     private ObservableList<InventoryItem> itemsData = FXCollections.observableArrayList();
     private ObservableList<InventoryItem> searchItemsData = FXCollections.observableArrayList();
+
 
     public InventoryItemsController(ItemInventoryManager itemInventoryManager, SceneManager sceneManager) {
         this.itemInventoryManager = itemInventoryManager;
@@ -56,6 +63,8 @@ public class InventoryItemsController implements Initializable {
     private Button saveButton;
     @FXML
     private Button clearSearchToolBar;
+    @FXML
+    private SplitMenuButton sortSplitMenu;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,6 +77,7 @@ public class InventoryItemsController implements Initializable {
         Image imageOpen = new Image(getClass().getResourceAsStream("icons/open.png"));
         Image imageSave = new Image(getClass().getResourceAsStream("icons/save.png"));
         Image imageClear = new Image(getClass().getResourceAsStream("icons/clear.png"));
+        Image imageSort = new Image(getClass().getResourceAsStream("icons/sort.png"));
 
         addButtonToolBar.setGraphic(new ImageView(imageAdd));
         editButton.setGraphic(new ImageView(imageEdit));
@@ -76,9 +86,17 @@ public class InventoryItemsController implements Initializable {
         openButton.setGraphic(new ImageView(imageOpen));
         saveButton.setGraphic(new ImageView(imageSave));
         clearSearchToolBar.setGraphic(new ImageView(imageClear));
+        sortSplitMenu.setGraphic(new ImageView(imageSort));
 
         choiceBoxToolBar.getItems().add("Serial Number");
         choiceBoxToolBar.getItems().add("Name");
+
+        itemsTableView.setOnSort((event) -> {
+            System.out.println("Sorting items");
+
+            sortDetection();
+        });
+        itemsTableView.getSortOrder();
     }
 
     @FXML
@@ -177,6 +195,28 @@ public class InventoryItemsController implements Initializable {
     void clearSearchToolBarClicked(ActionEvent event) {
         searchBarText.clear();
         updateTableView();
+
+    }
+    @FXML
+    void sortByValueClicked(ActionEvent event) {
+        itemInventoryManager.sort("Value");
+        updateTableView();
+
+    }
+    @FXML
+    void sortSerialNumberClicked(ActionEvent event) {
+        itemInventoryManager.sort("Serial number");
+        updateTableView();
+    }
+    @FXML
+    void sortNameClicked(ActionEvent event) {
+        itemInventoryManager.sort("Name");
+        updateTableView();
+    }
+    public void sortDetection() {
+        itemInventoryManager.SortedData(itemsTableView.getItems());
+        //itemsTableView.getComparator().
+        System.out.println(itemsTableView.getSelectionModel().getFocusedIndex());
 
     }
 }

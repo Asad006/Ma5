@@ -94,17 +94,21 @@ public class EditItemController implements Initializable {
     void saveEditButtonClicked(ActionEvent event) {
 
 
-
-        if (itemInventoryManager.isNumericValue(valueEditTextField.getText().substring(1)) ) {
+        if (itemInventoryManager.isNumericValue(valueEditTextField.getText().substring(1))) {
             Double valueNumber = Double.parseDouble(valueEditTextField.getText().substring(1));
             BigDecimal valueBigDecimal = new BigDecimal(valueNumber);
             BigDecimal valueDisplayMoney = valueBigDecimal.setScale(2, RoundingMode.HALF_EVEN);
 
             int index = inventoryItemsController.getSelectedIndex();
 
-            if ((itemInventoryManager.isSerialNumberUnique(serialNumberEditTextField.getText()) || serialNumberEditTextField.getText().equals(serialNumber))&& itemInventoryManager.isSerialNumberIsValid(serialNumberEditTextField.getText())) {
-                InventoryItem editedItem = new InventoryItem("$"+valueDisplayMoney.toString(), serialNumberEditTextField.getText(), nameTextEditField.getText());
+            if ((itemInventoryManager.isSerialNumberUnique(serialNumberEditTextField.getText()) ||
+                    serialNumberEditTextField.getText().equals(serialNumber)) &&
+                    itemInventoryManager.isSerialNumberIsValid(serialNumberEditTextField.getText())) {
+
+                InventoryItem editedItem = new InventoryItem("$" + valueDisplayMoney.toString(),
+                        serialNumberEditTextField.getText(), nameTextEditField.getText());
                 itemInventoryManager.editItem(editedItem, index);
+
                 inventoryItemsController.updateTableView();
 
                 Stage stage = (Stage) valueEditTextField.getScene().getWindow();
@@ -121,7 +125,7 @@ public class EditItemController implements Initializable {
                 alert.showAndWait();
 
             }
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Entry Error");
             alert.setHeaderText("Value Number format is required.\n");
