@@ -19,14 +19,14 @@ To open a file click on the file save icon located on the menuBar at the top of 
 To remove item, Select the item in the table, and clicked on *Delete Item* icon button on toolbar of the application.
 
 #### Sort the list of items
-To sort the Items by serial number,value, and  name, click on *Sort By little triangle*  then choose the attribute which you want to sort by.
-located at the top right of the toot bar. The sorted table will be updated the data in the table. 
+To sort the Items by serial number,value, and  name, click on *Sort By little triangle* located at the top right of the
+ toolbar then choose the attribute which you want to sort by. The sorted table will be updated the data in the table. 
 
 #### Edit  item inventory
 To edit  the inventory items, select the item to edit and then click on the *edit item icon*. A window will pop up then
 click on load the load data in the window. after editing the data click on *Save* to save changes.
 
-#### search in  the list of items
+#### Search in  the list of items
 To search the Items by name or serial number click on *Sort By little triangle*  then choose the attribute which you want to search by.
 located at the top right of the toot bar. The search results  will be updated in the table. To go back the normal view,
 just click on *X* near the search bar.
