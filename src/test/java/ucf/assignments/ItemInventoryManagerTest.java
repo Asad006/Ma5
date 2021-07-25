@@ -3,13 +3,97 @@ package ucf.assignments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import junit.framework.TestCase;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class ItemInventoryManagerTest extends TestCase {
 
     public void testSave() {
-    }
+        // Given
+        // create  an object TodoListTableManager
+        // expectedData observable  collection
+        // create identical actualData Observable Collection with expected.
 
-    public void testSaveAsJsonFile() {
+        // when...
+        // call method SaveInJsonFile  to change expectedData
+
+        // then
+        //assertEquals(expectedData,actualData);
+        ItemInventoryManager itemListManager = new ItemInventoryManager();
+        FilesExtensionHandler fHandler = new FilesExtensionHandler();
+
+        ObservableList<InventoryItem> expectedData = FXCollections.observableArrayList();
+        ObservableList<InventoryItem> actualData = FXCollections.observableArrayList();
+
+        InventoryItem item = new InventoryItem("$745.36", "AWQERFAFD8", "Sony");
+        InventoryItem item1 = new InventoryItem("$399.00", "AXB124AXY3", "Xbox One");
+        InventoryItem item2 = new InventoryItem("$599.99", "S40AZBDE47", "Samsung TV");
+
+        actualData.add(item);
+        actualData.add(item1);
+        actualData.add(item2);
+
+        fHandler.saveAsJsonFile("src/test/resources/TestFileSave", actualData);
+        String actual = "";
+
+        try {
+            ClassLoader classLoader = getClass().getClassLoader();
+            File file = new File(classLoader.getResource("TextCaseOpen.json").getFile());
+
+            actual = FileUtils.readFileToString(new File(file.getPath()), StandardCharsets.UTF_8);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String expected = "[{\n" +
+                "  \"itemValue\": \"$745.36\",\n" +
+                "  \"itemSerialNumber\": \"AWQERFAFD8\",\n" +
+                "  \"itemName\": \"Sony\"\n" +
+                "},{\n" +
+                "  \"itemValue\": \"$399.00\",\n" +
+                "  \"itemSerialNumber\": \"AXB124AXY3\",\n" +
+                "  \"itemName\": \"Xbox One\"\n" +
+                "},{\n" +
+                "  \"itemValue\": \"$599.99\",\n" +
+                "  \"itemSerialNumber\": \"S40AZBDE47\",\n" +
+                "  \"itemName\": \"Samsung TV\"\n" +
+                "}]";
+
+        assertEquals(expected, actual);
+    }
+    public void testOpen_load_file() {
+        // load File
+        // create an object of type ItemListManger
+        // call function process file
+        // create new expected and actual data collection
+        // assert this two data collections
+        ItemInventoryManager itemListManager = new ItemInventoryManager();
+        FilesExtensionHandler fHandler = new FilesExtensionHandler();
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("TextCaseOpen.json").getFile());
+
+        ObservableList<InventoryItem> expectedData = FXCollections.observableArrayList();
+        ObservableList<InventoryItem> actualData = FXCollections.observableArrayList();
+
+        InventoryItem item = new InventoryItem("$745.36", "AWQERFAFD8", "Sony");
+        InventoryItem item1 = new InventoryItem("$399.00", "AXB124AXY3", "Xbox One");
+        InventoryItem item2 = new InventoryItem("$599.99", "S40AZBDE47", "Samsung TV");
+
+        expectedData.add(item);
+        expectedData.add(item1);
+        expectedData.add(item2);
+
+        actualData= fHandler.processJsonFile(file.getPath());
+
+        for (int i = 0; i < 3; i++) {
+            assertEquals(expectedData.get(i).getItemName(), actualData.get(i).getItemName());
+            assertEquals(expectedData.get(i).getItemSerialNumber(), actualData.get(i).getItemSerialNumber());
+            assertEquals(expectedData.get(i).getItemValue(), actualData.get(i).getItemValue());
+        }
     }
 
     public void testSearch() {
@@ -181,9 +265,6 @@ public class ItemInventoryManagerTest extends TestCase {
 
     }
 
-    public void testOpen() {
-    }
-
     public void testIsNumericValue() {
         // Given
         // create  an object ItemInventoryManager
@@ -317,6 +398,7 @@ public class ItemInventoryManagerTest extends TestCase {
 
         assertEquals(expectedData, actualData);
     }
+
     public void testSort_case_Serial_number() {
         //create data
         // sort the data
@@ -341,6 +423,7 @@ public class ItemInventoryManagerTest extends TestCase {
 
         assertEquals(expectedData, actualData);
     }
+
     public void testSort_case_By_Name() {
         //create data
         // sort the data

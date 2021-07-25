@@ -15,14 +15,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 
 public class ItemInventoryManager {
 
     private static final FileChooser fileChooser = new FileChooser();
+    private FilesExtensionHandler filesExtensionHandler = new FilesExtensionHandler();
     private Set<String> serialNumberData = new HashSet<>();
 
     private final ObservableList<InventoryItem> inventoryItemsData = FXCollections.observableArrayList();
@@ -39,40 +38,16 @@ public class ItemInventoryManager {
         System.out.println("ext " + fileExtension);
         System.out.println(path);
         System.out.println(file.getName());
+
         if (fileExtension.equals("*.json")) {
-            System.out.println("we are here");
-            saveAsJsonFile(path, inventoryItemsData);
+            filesExtensionHandler.saveAsJsonFile(path, inventoryItemsData);
+
         } else if (fileExtension.equals("*.html")) {
+            filesExtensionHandler.saveInHTMLFile(path, inventoryItemsData);
+
             saveInHTMLFile(path);
         } else if (fileExtension.equals("*.txt")) {
-            saveAsTSVFile(path, inventoryItemsData);
-        }
-
-
-    }
-
-    private void saveAsTSVFile(String path, ObservableList<InventoryItem> inventoryItemsData) {
-        if (!path.equals("")) {
-            try {
-                FileWriter file = new FileWriter(path);
-                file.write("Value\tSerial Number\tName\n");
-                for (int i = 0; i < inventoryItemsData.size(); i++) {
-                    file.write(inventoryItemsData.get(i).getItemValue() + "\t");
-                    file.write(inventoryItemsData.get(i).getItemSerialNumber() + "\t");
-
-                    file.write(inventoryItemsData.get(i).getItemName() + "\n");
-                   /*
-                    if (i > inventoryItemsData.size()-1){
-                        file.write();
-                    }*/
-                }
-
-                file.flush();
-                file.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            filesExtensionHandler.saveAsTSVFile(path, inventoryItemsData);
         }
 
 
@@ -140,32 +115,6 @@ public class ItemInventoryManager {
         return file;
     }
 
-    public void saveAsJsonFile(String path, ObservableList<InventoryItem> dataList) {
-        Gson gson = FxGson.coreBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-
-        if (!path.equals("")) {
-            try {
-                FileWriter file = new FileWriter(path);
-                file.write("[");
-
-                for (int i = 0; i < dataList.size(); i++) {
-                    file.write(gson.toJson(dataList.get(i)));
-
-                    if (i < dataList.size() - 1) {
-                        file.write(",");
-                    }
-                }
-
-                file.write("]");
-                file.flush();
-                file.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public ObservableList<InventoryItem> search(String text, String tag) {
         ObservableList<InventoryItem> itemsData = FXCollections.observableArrayList();
         for (int i = 0; i < inventoryItemsData.size(); i++) {
@@ -226,113 +175,26 @@ public class ItemInventoryManager {
         FileChooser.ExtensionFilter extensionFilter2 = new FileChooser.ExtensionFilter("Html file (*.html)", "*.html");
         FileChooser.ExtensionFilter extensionFilter3 = new FileChooser.ExtensionFilter("txt file (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().addAll(extensionFilter1, extensionFilter2, extensionFilter3);
+
         File file = fileChooser.showOpenDialog(stage);
 
-        String fileExtension = (fileChooser.getSelectedExtensionFilter().getExtensions()).get(0);
+        if (file!=null){
+            String fileExtension = (fileChooser.getSelectedExtensionFilter().getExtensions()).get(0);
+            if (fileExtension.equals("*.json")) {
+                dateFile = filesExtensionHandler.processJsonFile(file.getPath());
 
-        System.out.println("ext " + fileExtension);
+            } else if (fileExtension.equals("*.html")) {
+                dateFile = filesExtensionHandler.processHTMLFile(file.getPath());
 
+            } else {
+                dateFile = filesExtensionHandler.processTXTFile(file.getPath());
 
-        if (fileExtension.equals("*.json")) {
-            System.out.println("we are here");
-            dateFile = processJsonFile(file.getPath());
-        } else if (fileExtension.equals("*.html")) {
-            dateFile = processHTMLFile(file.getPath());
-        } else {
-            dateFile = processTXTFile(file.getPath());
+            }
+        }else {
+            dateFile=null;
         }
-
-
-        //return ;
 
         inventoryItemsData.addAll(dateFile);
-
-    }
-
-    private ObservableList<InventoryItem> processHTMLFile(String path) {
-        ObservableList<InventoryItem> dataList = FXCollections.observableArrayList();
-
-        File input = new File(path);
-        try {
-            Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
-            Elements table = doc.select("table");
-            Elements tableRows = table.select("tr");
-
-            Iterator<Element> ite = tableRows.select("td").iterator();
-            while (ite.hasNext()) {
-                InventoryItem item = new InventoryItem();
-                String value1 = ite.next().text();
-                item.setItemValue(value1);
-                String value2 = ite.next().text();
-                item.setItemSerialNumber(value2);
-                String value3 = ite.next().text();
-                item.setItemName(value3);
-                dataList.add(item);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return dataList;
-    }
-
-    private ObservableList<InventoryItem> processTXTFile(String path) {
-        ObservableList<InventoryItem> dataList = FXCollections.observableArrayList();
-        /*
-        try {
-            for (String line : Files.readAllLines(Paths.get(path))) {
-                for (String part : line.split("\\s+")) {
-                    System.out.println(part);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-        try (BufferedReader TSVReader = new BufferedReader(new FileReader(path))) {
-            String line = null;
-            while ((line = TSVReader.readLine()) != null) {
-                String[] lineItems = line.split("\t");
-
-                System.out.println(lineItems[0].trim());
-                InventoryItem item = new InventoryItem();
-                if (!lineItems[0].trim().equals("Value")) {
-                    item.setItemValue(lineItems[0].trim());
-                    item.setItemSerialNumber(lineItems[1].trim());
-                    item.setItemName(lineItems[2].trim());
-                    dataList.add(item);
-                }
-
-
-            }
-        } catch (Exception e) {
-            System.out.println("Something went wrong");
-        }
-
-        return dataList;
-    }
-
-    private ObservableList<InventoryItem> processJsonFile(String path) {
-        ObservableList<InventoryItem> dataList = FXCollections.observableArrayList();
-        InventoryItem[] itemDataArray;
-
-        Gson gson = FxGson.coreBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-
-        JSONParser jsonParser = new JSONParser();
-
-        try {
-
-            JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader(path));
-
-            String userJson = jsonArray.toJSONString();
-            itemDataArray = gson.fromJson(userJson, InventoryItem[].class);
-            dataList.addAll(Arrays.asList(itemDataArray));
-
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-
-        return dataList;
     }
 
     public boolean isNumericValue(String text) {
@@ -390,12 +252,6 @@ public class ItemInventoryManager {
         }
     }
 
-
-    public void SortedData(ObservableList<InventoryItem> items) {
-        sortedItemsData=items;
-
-
-    }
     public void sort(String tag) {
         // call the built in sort method of the Observable Object.
 

@@ -1,9 +1,9 @@
 ## Help section for an Inventory Item  Application
-This application is intended to help the user to manage a list of items that contains a description, due date, 
-and status. The following sections helps the user to get familiar with the functionality of the application.
+This application is intended to help the user to manage a list of iventory items that contains a unique serial Number
+, value, and name. The following sections helps the user to get familiar with the functionality of the application.
 
 #### Open file
-Tto open a file click on the file located in the menuBar at the top of the application.Another menu will pop up, 
+To open a file click on the file located in the menuBar at the top of the application.Another menu will pop up, 
 and then select open. A file chooser will pop up enabling you to navigate within your folders and files. When you 
 select the file you want to open, click open. the file will be opened in the table of the application. remember that 
 the file needs to have a Json format.

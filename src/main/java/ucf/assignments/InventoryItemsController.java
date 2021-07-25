@@ -91,18 +91,6 @@ public class InventoryItemsController implements Initializable {
         choiceBoxToolBar.getItems().add("Serial Number");
         choiceBoxToolBar.getItems().add("Name");
 
-        itemsTableView.setOnSort((event) -> {
-            System.out.println("Sorting items");
-
-            sortDetection();
-        });
-        itemsTableView.getSortOrder();
-    }
-
-    @FXML
-    void saveAsClicked(ActionEvent event) {
-        itemInventoryManager.save();
-
     }
 
     @FXML
@@ -111,13 +99,6 @@ public class InventoryItemsController implements Initializable {
         searchItemsData = itemInventoryManager.search(searchBarText.getText(), tag);
         itemsTableView.setItems(searchItemsData);
     }
-
-    @FXML
-    void searchKeyTyped(KeyEvent event) {
-        // System.out.println(searchBarText.getText());
-        //Collections.b
-    }
-
     @FXML
     void addItemToolBarClicked(ActionEvent event) {
         Stage primaryStage = new Stage();
@@ -126,23 +107,13 @@ public class InventoryItemsController implements Initializable {
         primaryStage.setTitle("Add Item");
         primaryStage.show();
     }
-
     @FXML
     void editButtonClicked(ActionEvent event) {
-
-
         Stage primaryStage = new Stage();
 
         primaryStage.setScene(sceneManager.getScene("Edit"));
         primaryStage.setTitle("Edit Item");
         primaryStage.show();
-       //editItemController.loadData(getSelectedItem());
-    }
-
-    public void addItem(InventoryItem item) {
-        itemsData.add(item);
-        // itemsTableView.setItems(inventoryItemsData);
-        updateTableView();
     }
 
     public void updateTableView() {
@@ -213,10 +184,9 @@ public class InventoryItemsController implements Initializable {
         itemInventoryManager.sort("Name");
         updateTableView();
     }
-    public void sortDetection() {
-        itemInventoryManager.SortedData(itemsTableView.getItems());
-        //itemsTableView.getComparator().
-        System.out.println(itemsTableView.getSelectionModel().getFocusedIndex());
 
+    @FXML
+    void saveButtonClicked(ActionEvent event) {
+        itemInventoryManager.save();
     }
 }
