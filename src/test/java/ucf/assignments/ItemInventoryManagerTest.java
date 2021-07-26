@@ -314,6 +314,9 @@ public class ItemInventoryManagerTest extends TestCase {
         actualData.add(item);
         int index = 0;
 
+        itemInventoryManager.add(item);
+        itemInventoryManager.isSerialNumberUnique("AXB124AXY3");
+
         itemInventoryManager.delete(actualData, index);
 
         assertEquals(expectedData, actualData);

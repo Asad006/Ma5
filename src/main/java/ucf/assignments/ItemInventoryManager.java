@@ -175,10 +175,17 @@ public class ItemInventoryManager {
         // create object of the todoTask
         // call remove function of the observable collection
         if (index >= 0) {
+            removefromSet(inventoryItemsData.get(index).getItemSerialNumber());
             itemsData.remove(index);
+
         }
 
         return itemsData;
+    }
+
+    private void removefromSet(String itemSerialNumber) {
+        // remove the serial number from the set
+        serialNumberData.remove(itemSerialNumber);
     }
 
     public void clear(ObservableList<InventoryItem> itemsData) {

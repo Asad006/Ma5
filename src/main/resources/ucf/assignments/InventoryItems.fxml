@@ -53,17 +53,17 @@
                 </ToolBar>
                 <TableView fx:id="itemsTableView" blendMode="EXCLUSION" prefHeight="438.0" prefWidth="1250.0">
                     <columns>
-                        <TableColumn fx:id="valueColumn" maxWidth="260.0" minWidth="60.0" prefWidth="260.0" resizable="false" text="Value">
+                        <TableColumn fx:id="valueColumn" maxWidth="260.0" minWidth="60.0" prefWidth="260.0" resizable="false" sortable="false" text="Value">
                             <cellValueFactory>
                                 <PropertyValueFactory property="itemValue" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn fx:id="serialNumberColumn" prefWidth="370.0" text="Serial Number">
+                        <TableColumn fx:id="serialNumberColumn" prefWidth="370.0" sortable="false" text="Serial Number">
                             <cellValueFactory>
                                 <PropertyValueFactory property="itemSerialNumber" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn fx:id="nameItemColumn" prefWidth="563.0" text="Name">
+                        <TableColumn fx:id="nameItemColumn" prefWidth="563.0" sortable="false" text="Name">
                             <cellValueFactory>
                                 <PropertyValueFactory property="itemName" />
                             </cellValueFactory>
